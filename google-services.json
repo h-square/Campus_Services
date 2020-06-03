@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1005372920046",
+    "firebase_url": "https://campusservices-208ad.firebaseio.com",
+    "project_id": "campusservices-208ad",
+    "storage_bucket": "campusservices-208ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005372920046:android:436b1478514c8f11a623ff",
+        "android_client_info": {
+          "package_name": "com.example.campus_services"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005372920046-ff026i4vt752e2k1pb38sqsjd4v3lpsa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiB4ZmvXOXRJw7kZT31vSnpn2HkR1TNNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005372920046-ff026i4vt752e2k1pb38sqsjd4v3lpsa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
