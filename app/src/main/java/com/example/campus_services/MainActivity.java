@@ -22,6 +22,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -30,12 +35,47 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText etEmail,etPassword;
     private TextView tvSignup,tvForgotPassword;
+    private String user,UID;
 
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
 
+    String getType(String email){
+        String t="@daiict.ac.in";
+        String type="";
+        int i=0;
+        while(i<email.length() && email.charAt(i)!='@')
+            i++;
+        if(email.substring(i).equals(t))
+        {
+            i--;
+            int isStudent=1;
+            while(i>=0)
+            {
+                if(email.charAt(i)<'0' || email.charAt(i)>'9')
+                    isStudent=0;
+                i--;
+            }
+            if(isStudent == 1)
+                type = "student";
+            else
+                type = "faculty";
+        }
+        else{
+            i=0;
+            while(i<email.length() && email.charAt(i) != '.')
+                i++;
+            i++;
+            int en=i;
+            while(en<email.length() && email.charAt(en) != '@')
+                en++;
+            type = email.substring(i,en);
+        }
+        return type;
+    }
+
     private void userLogin(){
-        String email = etEmail.getText().toString().trim().toLowerCase();
+        final String email = etEmail.getText().toString().trim().toLowerCase();
         String password = etPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
@@ -50,16 +90,33 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
+        if(email.equals("admin") && password.equals("Admin_All@DA")){
+            finish();
+            startActivity(new Intent(getApplicationContext(),ModifyCanteen.class));
+            return;
+        }
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressDialog.dismiss();
                 if(task.isSuccessful()){
-                    finish();
-                    startActivity(new Intent(getApplicationContext(),SignUpActivity.class));
+                    String type=getType(email);
+                    if(type.equals("student")) {
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    }
+                    else if(type.equals("cafe")){
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), CanteenManager.class));
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"You are" + type,Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"Incorrect credentials",Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
         });
@@ -70,14 +127,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.CAMERA}, 1);
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null)
         {
-            finish();
-            startActivity(new Intent(MainActivity.this,SignUpActivity.class));
+            user = mAuth.getCurrentUser().getEmail();
+            String type = getType(user);
+            if(type.equals("student")) {
+                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            }
+            else if(type.equals("cafe")){
+                UID = mAuth.getUid();
+                final FirebaseDatabase db = FirebaseDatabase.getInstance();
+                final DatabaseReference table_canteen = db.getReference("Canteen");
+                table_canteen.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Canteen canteen = dataSnapshot.child(UID).getValue(Canteen.class);
+                        Intent intent = new Intent(MainActivity.this, CanteenManager.class);
+                        intent.putExtra("CanteenName", canteen.getName());
+                        intent.putExtra("CanteenAvailable", canteen.getAvailable());
+                        startActivity(intent);
+                        finish();
+                        table_canteen.removeEventListener(this);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        System.out.println("The read failed: " + databaseError.getCode());
+                    }
+                });
+
+            }
         }
 
         etEmail=findViewById(R.id.etEmail);

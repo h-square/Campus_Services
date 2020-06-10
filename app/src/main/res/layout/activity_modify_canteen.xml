@@ -2,137 +2,103 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SignUpActivity">
+    tools:context=".ModifyCanteen">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_centerHorizontal="false"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:contentDescription="logo"
-            android:src="@drawable/daiict_logo" />
-
         <TextView
-            android:id="@+id/appName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/logo"
-            android:text="Campus Facilities"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvCanteenName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
-            android:text=" Name"
+            android:text="Canteen Name"
             android:textColor="@android:color/black"
             android:textSize="17sp" />
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/etCanteenName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:drawableRight="@drawable/name_logo"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/tvEmail"
+            android:id="@+id/tvCanteenEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
-            android:text=" Email"
+            android:text="Canteen Email"
             android:textColor="@android:color/black"
             android:textSize="17sp" />
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/etCanteenEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:drawableRight="@drawable/email_logo"
             android:ems="10"
             android:inputType="textEmailAddress" />
 
         <TextView
-            android:id="@+id/tvPhoneNumber"
+            android:id="@+id/tvCanteenContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
-            android:text=" Phone Number"
+            android:text="Canteen Contact"
             android:textColor="@android:color/black"
             android:textSize="17sp" />
 
         <EditText
-            android:id="@+id/etPhoneNumber"
+            android:id="@+id/etCanteenContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:drawableRight="@drawable/call_logo"
             android:ems="10"
-            android:inputType="phone" />
+            android:inputType="number|phone" />
 
         <TextView
-            android:id="@+id/tvPassword"
+            android:id="@+id/tvCanteenPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
-            android:text=" Password"
+            android:text="Canteen Password"
             android:textColor="@android:color/black"
             android:textSize="17sp" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etCanteenPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:drawableRight="@drawable/password_logo"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="textWebPassword" />
 
         <Button
-            android:id="@+id/btnSignup"
+            android:id="@+id/btnCanteenAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:text="Sign Up" />
-
-        <TextView
-            android:id="@+id/tvLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
-            android:text="Already a user? Login"
-            android:textColor="@android:color/black"
-            android:textSize="17sp" />
+            android:text="Add" />
 
     </LinearLayout>
 </ScrollView>

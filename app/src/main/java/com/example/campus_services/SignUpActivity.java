@@ -36,26 +36,23 @@ public class SignUpActivity extends AppCompatActivity {
 
         String t="201701448@daiict.ac.in";
 
-        if(email.length()!=t.length()){
+        int i=0;
+        while(i<email.length() && email.charAt(i)!='@')
+            i++;
+        if(i==email.length()){
             Toast.makeText(SignUpActivity.this,"Enter valid daiict email address!",Toast.LENGTH_SHORT).show();
             return;
         }
-        for(int i=0;i<9;i++){
-            if(email.charAt(i)<'0' || email.charAt(i)>'9'){
-                Toast.makeText(SignUpActivity.this,"Enter valid student id first",Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-        if(!email.substring(9).equals(t.substring(9))){
+        if(!email.substring(i).equals(t.substring(9))){
             Toast.makeText(SignUpActivity.this,"Only daiict email address is valid!",Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(SignUpActivity.this, "Email field can't be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this, "Email field can't be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(SignUpActivity.this,"Password field can't be empty",Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this,"Password field can't be empty!",Toast.LENGTH_SHORT).show();
             return;
         }
         progressDialog.setMessage("Registering " + name);
@@ -68,15 +65,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     final DatabaseReference table_user = database.getReference("User");
-
-                    User user = new User(etName.getText().toString().trim(),etPhoneNumber.getText().toString().trim() , "0");
+                    // Create a new user with a first and last name
+                    User user = new User(etName.getText().toString().trim(), etPhoneNumber.getText().toString().trim(), "0");
                     table_user.child(etEmail.getText().toString().trim().substring(0,9)).setValue(user);
-                    Toast.makeText(SignUpActivity.this,"Registered Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this,"Registered Sucessfully", Toast.LENGTH_SHORT).show();
                     finish();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                 }
                 else{
-                    Toast.makeText(SignUpActivity.this,"Could not register! Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this,"Could not register! Try again", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -88,6 +85,10 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+        }
 
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
