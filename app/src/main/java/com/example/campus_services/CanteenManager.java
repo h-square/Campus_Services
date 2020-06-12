@@ -64,7 +64,7 @@ public class CanteenManager extends AppCompatActivity {
         tvCanteenAvailability.setText(CanteenAvailability);
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        table_user = db.getReference("Canteen");
+        table_user = db.getReference().child("Users").child("Canteen");
         listener = table_user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -134,7 +134,7 @@ public class CanteenManager extends AppCompatActivity {
                     CanteenAvailability = "1";
                 }
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
-                final DatabaseReference table_canteen = db.getReference("Canteen");
+                final DatabaseReference table_canteen = db.getReference().child("Users").child("Canteen");
                 table_canteen.child(UID).child("available").setValue(CanteenAvailability);
             }
         });

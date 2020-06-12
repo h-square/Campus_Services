@@ -1,20 +1,27 @@
 package com.example.campus_services;
 
+import android.content.Context;
+import android.widget.ImageView;
+
 public class Canteen {
     private String Name;
     private String Email;
     private String Available;
+    private String Contact;
     private String Virtual_Money;
+    private String Image_Url;
 
     public Canteen(){
 
     }
 
-    public Canteen(String available, String email, String name, String virtual_Money) {
+    public Canteen(String available, String email, String name,String contact,String virtual_Money) {
         Name = name;
         Email = email;
         Available = available;
+        Contact = contact;
         Virtual_Money = virtual_Money;
+        Image_Url = "";
     }
 
     public String getName() {
@@ -33,6 +40,10 @@ public class Canteen {
         return Virtual_Money;
     }
 
+    public String getImage_Url() { return Image_Url; }
+
+    public String getContact() { return Contact; }
+
     public void setName(String name) {
         Name = name;
     }
@@ -48,4 +59,8 @@ public class Canteen {
     public void setVirtual_Money(String virtual_Money) {
         Virtual_Money = virtual_Money;
     }
+
+    public void setImage_Url(String image_Url) { Image_Url = image_Url; }
+
+    public void setContact(String contact) { Contact = contact; }
 }

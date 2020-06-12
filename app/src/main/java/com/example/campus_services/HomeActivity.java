@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         progressDialog.show();
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        table_user = db.getReference("User");
+        table_user = db.getReference("Users").child("Student");
         listener1 = table_user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,10 +98,16 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuLogout:
                 table_user.removeEventListener(listener1);
                 mAuth.signOut();
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, Login_Activity.class);
                 finish();
                 startActivity(intent);
                 return true;
+
+            case R.id.menuProfile:
+                Intent intent1 = new Intent(this,Student_Profile.class);
+                startActivity(intent1);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

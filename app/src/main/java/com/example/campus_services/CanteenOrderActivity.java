@@ -67,7 +67,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
         getCanteenList();
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        table_user = db.getReference("User");
+        table_user = db.getReference("Users").child("Student");
         listener = table_user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

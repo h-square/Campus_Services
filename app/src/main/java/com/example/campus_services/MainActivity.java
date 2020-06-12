@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,185 +33,100 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnLogin;
-    private EditText etEmail,etPassword;
-    private TextView tvSignup,tvForgotPassword;
-    private String user,UID;
-
-    private ProgressDialog progressDialog;
-    private FirebaseAuth mAuth;
-
-    String getType(String email){
-        String t="@daiict.ac.in";
-        String type="";
-        int i=0;
-        while(i<email.length() && email.charAt(i)!='@')
-            i++;
-        if(email.substring(i).equals(t))
-        {
-            i--;
-            int isStudent=1;
-            while(i>=0)
-            {
-                if(email.charAt(i)<'0' || email.charAt(i)>'9')
-                    isStudent=0;
-                i--;
-            }
-            if(isStudent == 1)
-                type = "student";
-            else
-                type = "faculty";
-        }
-        else{
-            i=0;
-            while(i<email.length() && email.charAt(i) != '.')
-                i++;
-            i++;
-            int en=i;
-            while(en<email.length() && email.charAt(en) != '@')
-                en++;
-            type = email.substring(i,en);
-        }
-        return type;
-    }
-
-    private void userLogin(){
-        final String email = etEmail.getText().toString().trim().toLowerCase();
-        String password = etPassword.getText().toString().trim();
-
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Email field can't be empty!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Password field can't be empty!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
-
-        if(email.equals("admin") && password.equals("Admin_All@DA")){
-            finish();
-            startActivity(new Intent(getApplicationContext(),ModifyCanteen.class));
-            return;
-        }
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                progressDialog.dismiss();
-                if(task.isSuccessful()){
-                    String type=getType(email);
-                    if(type.equals("student")) {
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                    }
-                    else if(type.equals("cafe")){
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), CanteenManager.class));
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),"You are" + type,Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                else {
-                    Toast.makeText(getApplicationContext(),"Incorrect credentials",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        });
-
-    }
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.CAMERA}, 1);
-        ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null)
-        {
-            user = mAuth.getCurrentUser().getEmail();
-            String type = getType(user);
-            if(type.equals("student")) {
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-            }
-            else if(type.equals("cafe")){
-                UID = mAuth.getUid();
-                final FirebaseDatabase db = FirebaseDatabase.getInstance();
-                final DatabaseReference table_canteen = db.getReference("Canteen");
-                table_canteen.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            Log.d("hi","1");
+            Intent intent = new Intent(MainActivity.this,Login_Activity.class);
+            finish();
+            startActivity(intent);
+        }
+        else{
+            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            final String student_id = email.substring(0,9);
 
-                        Canteen canteen = dataSnapshot.child(UID).getValue(Canteen.class);
-                        Intent intent = new Intent(MainActivity.this, CanteenManager.class);
-                        intent.putExtra("CanteenName", canteen.getName());
-                        intent.putExtra("CanteenAvailable", canteen.getAvailable());
-                        startActivity(intent);
+            databaseReference.child("Users").child("Canteen").child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        // forward to canteen's home activity
+                        Intent intent = new Intent(MainActivity.this,CanteenManager.class);
                         finish();
-                        table_canteen.removeEventListener(this);
+                        startActivity(intent);
                     }
+                    else{
+                        databaseReference.child("Users").child("Doctor").child(uid).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    // forward to doctor's home activity
+                                }
+                                else{
+                                    databaseReference.child("Users").child("Supervisor").child(uid).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.exists()){
+                                                // forward to supervisor's home activity
+                                            }
+                                            else{
+                                                databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if(dataSnapshot.exists()){
+                                                            Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                                                            finish();
+                                                            startActivity(intent);
+                                                        }
+                                                        else{
+                                                            Log.d("hello! = ", "1" );
+                                                            FirebaseAuth.getInstance().signOut();
+                                                            Intent intent = new Intent(MainActivity.this,Login_Activity.class);
+                                                            finish();
+                                                            startActivity(intent);
+                                                        }
+                                                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        System.out.println("The read failed: " + databaseError.getCode());
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
-                });
+                }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
         }
 
-        etEmail=findViewById(R.id.etEmail);
-        etPassword=findViewById(R.id.etPassword);
-        btnLogin=findViewById(R.id.btnLogin);
-        tvSignup=findViewById(R.id.tvSignup);
-        tvForgotPassword=findViewById(R.id.tvForgotPassword);
-        progressDialog = new ProgressDialog(this);
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLogin();
-            }
-        });
-
-        tvSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(getApplicationContext(),SignUpActivity.class));
-            }
-        });
-
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etEmail.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(getApplicationContext(),"Enter Email ID..",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    FirebaseAuth.getInstance().sendPasswordResetEmail(etEmail.getText().toString().trim())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(),"Password reset email is sent",Toast.LENGTH_SHORT).show();
-                                    }
-                                    else {
-                                        Toast.makeText(getApplicationContext(),"Enter Correct Email ID",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-            }
-        });
     }
-
 
 }

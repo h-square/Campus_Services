@@ -4,15 +4,15 @@ public class User {
     private String Name;
     private String Contact;
     private String Virtual_Money;
+    private String Image_Url;
 
-    public User(){
-
-    }
+    public User(){ }
 
     public User(String name, String contact, String vm){
-        Name = name;
-        Contact = contact;
-        Virtual_Money = vm;
+        this.Name = name;
+        this.Contact = contact;
+        this.Virtual_Money = vm;
+        this.Image_Url = "";
     }
 
     public String getName(){
@@ -38,4 +38,9 @@ public class User {
     public void setVirtual_Money(String mo){
         Virtual_Money=mo;
     }
+
+    public String getImage_Url() { return Image_Url; }
+
+    public void setImage_Url(String image_Url) { Image_Url = image_Url; }
+
 }
