@@ -49,7 +49,7 @@ public class CanteenMenu extends AppCompatActivity {
         CanteenName = intent.getStringExtra("CanteenName");
         OrderString = intent.getStringExtra("OrderString");
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("Menu_"+CanteenName);
+        mDatabase = FirebaseDatabase.getInstance().getReference("CanteenMenu/"+CanteenName);
         mItemName = new ArrayList<>();
         mItem = new ArrayList<>();
         availability = new ArrayList<>();
@@ -87,13 +87,13 @@ public class CanteenMenu extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Item is unavailable currently", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                /*Intent intent1 = new Intent(getApplicationContext(), SelectQuantity.class);
+                Intent intent1 = new Intent(getApplicationContext(), ItemQuantity.class);
                 intent1.putExtra("CurrentActivity","CanteenMenu");
-                intent1.putExtra("CurrentDish", ItemName.get(position));
+                intent1.putExtra("CurrentDish", mItemName.get(position));
                 intent1.putExtra("OrderString", OrderString);
                 intent1.putExtra("CanteenName",CanteenName);
                 finish();
-                startActivity(intent1);*/
+                startActivity(intent1);
             }
         });
 

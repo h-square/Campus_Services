@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddItem"></activity>
+        <activity android:name=".ItemQuantity"></activity>
+        <activity android:name=".AddItem" />
         <activity android:name=".SignUp_Non_Student" />
         <activity android:name=".Login_Activity" />
         <activity android:name=".Student_Profile" />
