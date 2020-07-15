@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUp_Non_Student"></activity>
+        <activity android:name=".AddItem"></activity>
+        <activity android:name=".SignUp_Non_Student" />
         <activity android:name=".Login_Activity" />
         <activity android:name=".Student_Profile" />
         <activity android:name=".SD_Register_Appointment" />
@@ -29,11 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
     </application>
 
 </manifest>

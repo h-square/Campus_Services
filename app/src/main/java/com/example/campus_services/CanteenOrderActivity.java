@@ -64,6 +64,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+
         getCanteenList();
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -85,7 +86,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
         CanteenList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(available.get(position).equals("1")){
+                if(available.get(position).equals("0")){
                     Toast.makeText(getApplicationContext(),"Canteen currently unavailable!",Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -104,7 +105,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
 
     private void getCanteenList(){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference table_canteen = database.getReference("Canteen");
+        final DatabaseReference table_canteen = database.getReference("Users/Canteen");
         table_canteen.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

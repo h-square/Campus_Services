@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -71,21 +72,25 @@ public class SignUp_Non_Student extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(name)){
                     vNS_Name.setError("Name is required");
+                    Toast.makeText(SignUp_Non_Student.this,"Name is required",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(TextUtils.isEmpty(email)){
                     vNS_Email.setError("Email is required");
+                    Toast.makeText(SignUp_Non_Student.this,"Email is required",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(TextUtils.isEmpty(phoneNumber)){
                     vNS_PhoneNumber.setError("Phone Number is required");
+                    Toast.makeText(SignUp_Non_Student.this,"Phone Number is required",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
                     vNS_Password.setError("Password is required");
+                    Toast.makeText(SignUp_Non_Student.this,"Password is required",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -94,7 +99,7 @@ public class SignUp_Non_Student extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             if(Type.equals("Canteen")){
-                                Canteen canteen = new Canteen("1",email,phoneNumber,name,"0");
+                                Canteen canteen = new Canteen("1", email, name, phoneNumber,"0");
                                 String Uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 databaseReference.child("Users").child("Canteen").child(Uid).setValue(canteen);
                             }

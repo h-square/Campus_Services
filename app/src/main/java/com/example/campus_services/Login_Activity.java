@@ -69,12 +69,15 @@ public class Login_Activity extends AppCompatActivity {
                             final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                             final String student_id = email.substring(0,9);
 
-                            databaseReference.child("Users").child("Canteen").child(uid).addValueEventListener(new ValueEventListener() {
+                            databaseReference.child("Users").child("Canteen").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists()){
                                         // forward to canteen's home activity
+                                        Canteen canteen = dataSnapshot.child(uid).getValue(Canteen.class);
                                         Intent intent = new Intent(Login_Activity.this,CanteenManager.class);
+                                        intent.putExtra("CanteenName", canteen.getName());
+                                        intent.putExtra("CanteenAvailable", canteen.getAvailable());
                                         finish();
                                         startActivity(intent);
                                     }
@@ -157,6 +160,5 @@ public class Login_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

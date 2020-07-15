@@ -48,15 +48,15 @@
                 android:id="@+id/btnChangeAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change"
+                android:layout_marginLeft="16dp"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="12sp"
+                android:text="Change"
                 app:autoSizeMaxTextSize="100sp"
+                app:autoSizeMinTextSize="12sp"
                 app:autoSizeStepGranularity="2sp"
-                android:layout_marginLeft="16dp"/>
+                app:autoSizeTextType="uniform" />
 
         </LinearLayout>
 

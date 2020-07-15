@@ -49,6 +49,7 @@ public class CanteenManager extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         UID = mAuth.getUid();
+
         Intent data = getIntent();
         CanteenName = data.getStringExtra("CanteenName");
         CanteenAvailability = data.getStringExtra("CanteenAvailable");
@@ -63,12 +64,12 @@ public class CanteenManager extends AppCompatActivity {
         tvDisplayCanteenName.setText(CanteenName);
         tvCanteenAvailability.setText(CanteenAvailability);
 
+
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        table_user = db.getReference().child("Users").child("Canteen");
+        table_user = db.getReference("Users/Canteen");
         listener = table_user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 Canteen canteen = dataSnapshot.child(UID).getValue(Canteen.class);
                 tvCanteenBalance.setText("₹ " + canteen.getVirtual_Money());
             }
@@ -79,7 +80,7 @@ public class CanteenManager extends AppCompatActivity {
             }
         });
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("Items@" + CanteenName);
+        mDatabase = FirebaseDatabase.getInstance().getReference("CanteenMenu/" + CanteenName);
         mItem = new ArrayList<>();
         mItemName = new ArrayList<>();
         availability = new ArrayList<>();
@@ -91,12 +92,12 @@ public class CanteenManager extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     Item item = ds.getValue(Item.class);
-                    mItemName.add(item.getName() + "\nPrice: " + item.getPrice() + "\nAvailable");
+                    mItemName.add(item.getName() + "\nPrice: " + item.getPrice());
                     if(item.getAvailability().equals("1")){
-                        mItem.add(item.getName() + "\nPrice" + item.getPrice() + "\nAvailable");
+                        mItem.add(item.getName() + "\nPrice: " + item.getPrice() + "\nAvailable");
                     }
                     else{
-                        mItem.add(item.getName() + "\nPrice" + item.getPrice() + "\nUnavailable");
+                        mItem.add(item.getName() + "\nPrice: " + item.getPrice() + "\nUnavailable");
                     }
                     availability.add(item.getAvailability());
                 }
@@ -136,6 +137,7 @@ public class CanteenManager extends AppCompatActivity {
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
                 final DatabaseReference table_canteen = db.getReference().child("Users").child("Canteen");
                 table_canteen.child(UID).child("available").setValue(CanteenAvailability);
+
             }
         });
 
@@ -143,11 +145,11 @@ public class CanteenManager extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 table_user.removeEventListener(listener);
-                /*Intent intent = new Intent(this, AddItem.class);
+                Intent intent = new Intent(getApplicationContext(), AddItem.class);
                 intent.putExtra("CanteenAvailable", CanteenAvailability);
                 intent.putExtra("CanteenName",CanteenName);
                 startActivity(intent);
-                CanteenManager.this.finish();*/
+                finish();
             }
         });
     }
