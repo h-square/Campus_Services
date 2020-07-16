@@ -133,12 +133,11 @@ public class CanteenMenu extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.ContactFeedback:
-                /*Intent intent1 = new Intent(getApplicationContext(), ContactFeedback.class);
+                Intent intent1 = new Intent(getApplicationContext(), ContactFeedback.class);
                 intent1.putExtra("OrderString", OrderString);
-                intent1.putExtra("CanteenNumber", CanteenNumber);
                 intent1.putExtra("CanteenName",CanteenName);
                 finish();
-                startActivity(intent1);*/
+                startActivity(intent1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
