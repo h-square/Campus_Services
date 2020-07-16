@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlaceOrder"></activity>
+        <activity android:name=".OrderStatus"></activity>
+        <activity android:name=".PlaceOrder" />
         <activity android:name=".Thanks" />
         <activity android:name=".ItemQuantity" />
         <activity android:name=".AddItem" />

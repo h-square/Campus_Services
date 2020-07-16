@@ -144,14 +144,14 @@ public class CanteenOrderActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menuOrderStatus:
                 table_user.removeEventListener(listener);
-                Intent intent1 = new Intent(this, CanteenMenu.class);
+                Intent intent1 = new Intent(this, OrderStatus.class);
                 intent1.putExtra("OperationType", "OrderStatus");
                 finish();
                 startActivity(intent1);
                 return true;
             case R.id.menuPastOrders:
                 table_user.removeEventListener(listener);
-                Intent intent2 = new Intent(this, CanteenMenu.class);
+                Intent intent2 = new Intent(this, OrderStatus.class);
                 intent2.putExtra("OperationType", "OrderHistory");
                 finish();
                 startActivity(intent2);
