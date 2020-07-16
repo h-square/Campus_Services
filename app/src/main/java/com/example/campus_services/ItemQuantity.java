@@ -59,6 +59,7 @@ public class ItemQuantity extends AppCompatActivity {
                     return;
                 }
                 qty.setText(Integer.toString(quantity));
+                OrderString+="\n";
             }
         });
 
@@ -68,6 +69,7 @@ public class ItemQuantity extends AppCompatActivity {
                 if(quantity>0)
                     quantity-=1;
                 qty.setText(Integer.toString(quantity));
+                OrderString+="\n";
             }
         });
 
@@ -103,7 +105,7 @@ public class ItemQuantity extends AppCompatActivity {
 
                 Intent intent1 = new Intent(getApplicationContext(), CanteenMenu.class);
                 if(CurrentActivity.equals("PlaceOrder")){
-                    //intent1 = new Intent(getApplicationContext(), PlaceOrder.class);
+                    intent1 = new Intent(getApplicationContext(), PlaceOrder.class);
                 }
                 intent1.putExtra("OrderString", OrderString);
                 intent1.putExtra("CanteenName",CanteenName);
@@ -111,5 +113,16 @@ public class ItemQuantity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this,CanteenMenu.class);
+        i.putExtra("CanteenName", CanteenName);
+        i.putExtra("OrderString", OrderString);
+        finish();
+        startActivity(i);
+
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Thanks">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Thanks"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thanks For Ordering"
+            android:textSize="48sp"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginTop="32dp"/>
+        <TextView
+            android:id="@+id/ViewOrderNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OrderNo - 12"
+            android:fontFamily="sans-serif-black"
+            android:textAlignment="center"
+            android:textSize="40sp"
+            android:layout_marginTop="32dp"/>
+        <Button
+            android:id="@+id/thanksGoBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textSize="32sp"
+            android:fontFamily="sans-serif-black"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentBottom="true"/>
+
+    </LinearLayout>
+
+</ScrollView>

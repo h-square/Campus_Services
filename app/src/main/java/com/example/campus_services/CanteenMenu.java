@@ -104,11 +104,11 @@ public class CanteenMenu extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Please add Items before Proceeding",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                /*Intent intent1 = new Intent(getApplicationContext(), PlaceOrder.class);
-                intent1.putExtra("OrderString", OrderString);
+                Intent intent1 = new Intent(getApplicationContext(), PlaceOrder.class);
                 intent1.putExtra("CanteenName",CanteenName);
+                intent1.putExtra("OrderString", OrderString);
                 finish();
-                startActivity(intent1);*/
+                startActivity(intent1);
             }
         });
     }

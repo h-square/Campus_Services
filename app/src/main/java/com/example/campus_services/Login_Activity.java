@@ -69,7 +69,7 @@ public class Login_Activity extends AppCompatActivity {
                             final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                             final String student_id = email.substring(0,9);
 
-                            databaseReference.child("Users").child("Canteen").addValueEventListener(new ValueEventListener() {
+                            databaseReference.child("Users").child("Canteen").child(uid).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists()){
