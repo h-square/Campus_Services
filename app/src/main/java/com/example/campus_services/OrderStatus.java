@@ -99,14 +99,14 @@ public class OrderStatus extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(OrderStatus.this,OrderSummary.class);
-//                intent.putExtra("OrderBasic", mItemName.get(position));
-//                intent.putExtra("OrderDetails",OrderDetails.get(position));
-//                intent.putExtra("OperationType", StatusType);
-//                intent.putExtra("CookingInstruction",CookingInstruction.get(position));
-//                intent.putExtra("PaymentMethod", paymentMethod.get(position));
-//                finish();
-//                startActivity(intent);
+                Intent intent = new Intent(OrderStatus.this,OrderSummary.class);
+                intent.putExtra("OrderBasic", mItemName.get(position));
+                intent.putExtra("OrderDetails",OrderDetails.get(position));
+                intent.putExtra("OperationType", StatusType);
+                intent.putExtra("CookingInstruction",CookingInstruction.get(position));
+                intent.putExtra("PaymentMethod", paymentMethod.get(position));
+                finish();
+                startActivity(intent);
             }
         });
     }
