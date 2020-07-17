@@ -190,11 +190,11 @@ public class CanteenManager extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menuContactFeedbackCanteen:
-                /*Intent intent1 = new Intent(this,Canteenfeedback.class);
+                Intent intent1 = new Intent(this,CanteenFeedback.class);
                 intent1.putExtra("CanteenName",CanteenName);
                 intent1.putExtra("CanteenAvailable", CanteenAvailability);
                 startActivity(intent1);
-                finish();*/
+                finish();
                 return true;
             case R.id.menuScanQR:
                 /*Intent intent = new Intent(this,ReadQR.class);
