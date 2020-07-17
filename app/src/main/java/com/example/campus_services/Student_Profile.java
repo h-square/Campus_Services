@@ -86,7 +86,6 @@ public class Student_Profile extends AppCompatActivity {
         });
 
 
-
         vStudent_Profile_Image_Selector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

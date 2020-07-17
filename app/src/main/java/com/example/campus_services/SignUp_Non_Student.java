@@ -28,12 +28,9 @@ import java.util.ArrayList;
 public class SignUp_Non_Student extends AppCompatActivity {
 
     private EditText vNS_Name,vNS_Email,vNS_PhoneNumber,vNS_Password;
-    private Spinner vUser_Type_Spinner;
-    private TextView vNS_Login;
+    private TextView vNS_Login,vTyep_Of_User;
     private Button vNS_Signup;
-
-    private ArrayList<String> User_Type_List;
-    private ArrayAdapter<String> User_Type_Adapter;
+    private String User_Type;
 
     private DatabaseReference databaseReference;
 
@@ -42,24 +39,20 @@ public class SignUp_Non_Student extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up__non__student);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        User_Type = bundle.getString(SignUpActivity.USER_TYPE_KEY);
+
         vNS_Name = (EditText) findViewById(R.id.NS_Name);
         vNS_Email = (EditText) findViewById(R.id.NS_Email);
         vNS_PhoneNumber = (EditText) findViewById(R.id.NS_PhoneNumber);
         vNS_Password = (EditText) findViewById(R.id.NS_Password);
         vNS_Login = (TextView) findViewById(R.id.NS_Login);
         vNS_Signup = (Button) findViewById(R.id.NS_Signup);
-        vUser_Type_Spinner = (Spinner) findViewById(R.id.User_Type_Spinner);
+        vTyep_Of_User = (TextView) findViewById(R.id.Tyep_Of_User);
+        vTyep_Of_User.setText(User_Type);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        User_Type_List = new ArrayList<>();
-        User_Type_Adapter = new ArrayAdapter<String>(SignUp_Non_Student.this,android.R.layout.simple_spinner_dropdown_item,User_Type_List);
-
-        User_Type_Adapter.add("Canteen");
-        User_Type_Adapter.add("Doctor");
-        User_Type_Adapter.add("Supervisor");
-
-        vUser_Type_Spinner.setAdapter(User_Type_Adapter);
 
         vNS_Signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +61,7 @@ public class SignUp_Non_Student extends AppCompatActivity {
                 final String email = vNS_Email.getText().toString().trim();
                 final String phoneNumber = vNS_PhoneNumber.getText().toString().trim();
                 String password = vNS_Password.getText().toString().trim();
-                final String Type = vUser_Type_Spinner.getSelectedItem().toString();
+                final String Type = User_Type;
 
                 if(TextUtils.isEmpty(name)){
                     vNS_Name.setError("Name is required");
@@ -104,10 +97,21 @@ public class SignUp_Non_Student extends AppCompatActivity {
                                 databaseReference.child("Users").child("Canteen").child(Uid).setValue(canteen);
                             }
                             else if(Type.equals("Doctor")){
-
+                                Doctor doctor = new Doctor(name,email,phoneNumber,"");
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                databaseReference.child("Users").child("Doctor").child(uid).setValue(doctor);
                             }
-                            else{
-
+                            else if(Type.equals("Supervisor")){
+                                // Add supervisor object's  creation code here
+                            }
+                            else if(Type.equals("Admin")){
+                                User user = new User(name,phoneNumber,"0");
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                databaseReference.child("Users").child("Admin").child(uid).setValue(user);
+                            }else if(Type.equals("Professor")){
+                                User user = new User(name,phoneNumber,"0");
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                databaseReference.child("Users").child("Professor").child(uid).setValue(user);
                             }
 
                             Intent intent = new Intent(SignUp_Non_Student.this,Login_Activity.class);

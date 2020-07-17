@@ -13,14 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CanteenFeedback"></activity>
-        <activity android:name=".CanteenOrderDeliver" />
-        <activity android:name=".CanteenOrderStatus" />
-        <activity android:name=".ItemEdit" />
-        <activity android:name=".ContactFeedback" />
-        <activity android:name=".GenerateQR" />
-        <activity android:name=".OrderSummary" />
-        <activity android:name=".OrderStatus" />
+        <activity android:name=".UserListSetting"></activity>
         <activity android:name=".PlaceOrder" />
         <activity android:name=".Thanks" />
         <activity android:name=".ItemQuantity" />
@@ -34,6 +27,8 @@
         <activity android:name=".CanteenOrderActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".AdminHome" />
+        <activity android:name=".UserList_Item_Details" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

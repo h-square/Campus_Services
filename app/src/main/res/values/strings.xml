@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Campus_Services</string>
+
+    <string name="pref_show_true">Shown</string>
+    <string name="pref_show_false">Hidden</string>
+
+    <string name="pref_ban_title">Banned Users</string>
+    <string name="pref_ban_key">isBannedUserListShown</string>
+
+    <string name="pref_Student_title">Student</string>
+    <string name="pref_Student_key">isStudentListShown</string>
+
+    <string name="pref_Professor_title">Professor</string>
+    <string name="pref_Professor_key">isProfessorListShown</string>
+
+    <string name="pref_Canteen_title">Canteen</string>
+    <string name="pref_Canteen_key">isCanteenListShown</string>
+
+    <string name="pref_Supervisor_title">Supervisor</string>
+    <string name="pref_Supervisor_key">isSupervisorListShown</string>
+
+    <string name="pref_Doctor_title">Doctor</string>
+    <string name="pref_Doctor_key">isDoctorListShown</string>
+
 </resources>

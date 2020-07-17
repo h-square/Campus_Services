@@ -116,15 +116,16 @@
             android:ems="10"
             android:inputType="textPassword" />
 
-        <Spinner
-            android:id="@+id/User_Type_Spinner"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/Tyep_Of_User"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Type of User"
+            android:textSize="20sp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
-            android:gravity="center"
-            />
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/NS_Signup"

@@ -10,6 +10,7 @@ public class Canteen {
     private String Contact;
     private String Virtual_Money;
     private String Image_Url;
+    private boolean Ban;
 
     public Canteen(){
 
@@ -22,6 +23,7 @@ public class Canteen {
         Contact = contact;
         Virtual_Money = virtual_Money;
         Image_Url = "";
+        this.Ban = false;
     }
 
     public String getName() {
@@ -63,4 +65,8 @@ public class Canteen {
     public void setImage_Url(String image_Url) { Image_Url = image_Url; }
 
     public void setContact(String contact) { Contact = contact; }
+
+    public void setBan(boolean ban) { Ban = ban; }
+
+    public boolean isBan() { return Ban; }
 }
