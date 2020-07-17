@@ -115,13 +115,13 @@ public class CanteenManager extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 table_user.removeEventListener(listener);
-                /*Intent intent1 = new Intent(getApplicationContext(), EditMenu.class);
+                Intent intent1 = new Intent(getApplicationContext(), ItemEdit.class);
                 intent1.putExtra("ItemString", mItemName.get(position));
                 intent1.putExtra("CanteenName",CanteenName);
                 intent1.putExtra("Availability",availability.get(position));
                 intent1.putExtra("CanteenAvailable", CanteenAvailability);
                 CanteenManager.this.finish();
-                startActivity(intent1);*/
+                startActivity(intent1);
             }
         });
 

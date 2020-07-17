@@ -74,7 +74,7 @@ public class Login_Activity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists()){
                                         // forward to canteen's home activity
-                                        Canteen canteen = dataSnapshot.child(uid).getValue(Canteen.class);
+                                        Canteen canteen = dataSnapshot.getValue(Canteen.class);
                                         Intent intent = new Intent(Login_Activity.this,CanteenManager.class);
                                         intent.putExtra("CanteenName", canteen.getName());
                                         intent.putExtra("CanteenAvailable", canteen.getAvailable());
