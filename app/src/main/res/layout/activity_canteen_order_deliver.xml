@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CanteenOrderDeliver">
+
+    <LinearLayout
+        android:layout_weight="15"
+        android:id="@+id/orderDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="140dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Order No"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="20dp"
+                android:fontFamily="sans-serif-black"
+                android:text=":"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tvOrderDeliverNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:fontFamily="sans-serif-black"
+                android:text="1"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="140dp"
+                android:fontFamily="sans-serif-black"
+                android:text="CustomerID"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="20dp"
+                android:fontFamily="sans-serif-black"
+                android:text=":"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tvOrderDeliverID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:fontFamily="sans-serif-black"
+                android:text="ID"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvOrderDeliver"
+            android:layout_width="match_parent"
+            android:layout_height="325dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cooking   :\nInstruction"
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif-condensed-medium"/>
+            <TextView
+                android:id="@+id/OrderDeliveryCookingInstruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Cooking Instruction"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:inputType="textMultiLine"
+                android:layout_marginLeft="16dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total: "
+                android:textSize="25sp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/OrderDeliverDetailsTotalAmount"
+                android:text="0"
+                android:paddingLeft="4dp"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif-black"/>
+
+            <TextView
+                android:id="@+id/canteenDisplayPaymentMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="sans-serif-black"
+                android:paddingRight="32dp"
+                android:paddingBottom="0dp"
+                android:text="Paid"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/DeliverOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deliver Order"
+            android:textSize="24sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-black"
+            android:layout_alignParentBottom="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

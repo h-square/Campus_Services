@@ -25,7 +25,7 @@ public class CanteenOrderStatus extends AppCompatActivity {
 
     private TextView PendingOrderNumber, StatusType;
     private ListView listView;
-    private ArrayList<String> mItemName, OrderDetails,saveOrderNumber, CookingInstruction, paymentMethod;
+    private ArrayList<String> mItemName, OrderDetails,saveOrderNumber, CookingInstruction, paymentMethod, OrderNo, Customers;
     private ArrayAdapter<String> arrayAdapter;
     private String CanteenName, OperationType,table_name,CanteenAvailable;
     private int count=0;
@@ -44,6 +44,8 @@ public class CanteenOrderStatus extends AppCompatActivity {
         StatusType = (TextView) findViewById(R.id.tvCanteenOrderStatusType);
         listView = (ListView) findViewById(R.id.lvPendingOrderCanteen);
         mItemName= new ArrayList<>();
+        OrderNo = new ArrayList<>();
+        Customers = new ArrayList<>();
         CookingInstruction = new ArrayList<>();
         saveOrderNumber = new ArrayList<>();
         OrderDetails= new ArrayList<>();
@@ -68,7 +70,9 @@ public class CanteenOrderStatus extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Order order = ds.getValue(Order.class);
-                    mItemName.add("Order No: " + order.getOrderNo() + "\nCustomerId: " + order.getCustomerId());
+                    mItemName.add("Order No: " + order.getOrderNo() + "\nCustomerID: " + order.getCustomerId());
+                    OrderNo.add(order.getOrderNo());
+                    Customers.add(order.getCustomerId());
                     OrderDetails.add(order.getOrderDetails());
                     saveOrderNumber.add(order.getOrderNo());
                     CookingInstruction.add(order.getCookingInstruction());
@@ -89,17 +93,19 @@ public class CanteenOrderStatus extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(CanteenOrderStatus.this,CanteenOrderDeliver.class);
-//                intent.putExtra("CanteenName",CanteenName);
-//                intent.putExtra("OrderBasic", mItemName.get(position));
-//                intent.putExtra("OrderDetails",OrderDetails.get(position));
-//                intent.putExtra("OrderNumber",saveOrderNumber.get(position));
-//                intent.putExtra("OperationType",OperationType);
-//                intent.putExtra("CookingInstruction",CookingInstruction.get(position));
-//                intent.putExtra("CanteenAvailable", CanteenAvailable);
-//                intent.putExtra("PaymentMethod",paymentMethod.get(position));
-//                CanteenOrderStatus.this.finish();
-//                startActivity(intent);
+                Intent intent = new Intent(CanteenOrderStatus.this,CanteenOrderDeliver.class);
+                intent.putExtra("CanteenName",CanteenName);
+                intent.putExtra("OrderBasic", mItemName.get(position));
+                intent.putExtra("OrderNo",OrderNo.get(position));
+                intent.putExtra("CustomerID",Customers.get(position));
+                intent.putExtra("OrderDetails",OrderDetails.get(position));
+                intent.putExtra("OrderNumber",saveOrderNumber.get(position));
+                intent.putExtra("OperationType",OperationType);
+                intent.putExtra("CookingInstruction",CookingInstruction.get(position));
+                intent.putExtra("CanteenAvailable", CanteenAvailable);
+                intent.putExtra("PaymentMethod",paymentMethod.get(position));
+                CanteenOrderStatus.this.finish();
+                startActivity(intent);
             }
         });
 
