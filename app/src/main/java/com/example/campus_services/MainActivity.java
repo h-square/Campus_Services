@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
                         // forward to canteen's home activity
+                        Canteen canteen = dataSnapshot.getValue(Canteen.class);
                         Intent intent = new Intent(MainActivity.this,CanteenManager.class);
+                        intent.putExtra("CanteenName", canteen.getName());
+                        intent.putExtra("CanteenAvailable", canteen.getAvailable());
                         finish();
                         startActivity(intent);
                     }

@@ -174,20 +174,20 @@ public class CanteenManager extends AppCompatActivity {
                 return true;
             case R.id.menuCanteenOrderHistory:
                 table_user.removeEventListener(listener);
-                /*Intent intent2 = new Intent(this,CanteenOrderStatus.class);
+                Intent intent2 = new Intent(this,CanteenOrderStatus.class);
                 intent2.putExtra("OperationType","OrderHistory");
                 intent2.putExtra("CanteenName",CanteenName);
                 intent2.putExtra("CanteenAvailable", CanteenAvailability);
                 startActivity(intent2);
-                finish();*/
+                finish();
                 return true;
             case R.id.menuCanteenStatus:
-                /*Intent intent3 = new Intent(this,CanteenOrderStatus.class);
-                intent3.putExtra("OperationType","OrderHistory");
+                Intent intent3 = new Intent(this,CanteenOrderStatus.class);
+                intent3.putExtra("OperationType","OrderStatus");
                 intent3.putExtra("CanteenName",CanteenName);
                 intent3.putExtra("CanteenAvailable", CanteenAvailability);
                 startActivity(intent3);
-                finish();*/
+                finish();
                 return true;
             case R.id.menuContactFeedbackCanteen:
                 /*Intent intent1 = new Intent(this,Canteenfeedback.class);

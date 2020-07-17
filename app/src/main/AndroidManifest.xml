@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ItemEdit"></activity>
+        <activity android:name=".CanteenOrderStatus"></activity>
+        <activity android:name=".ItemEdit" />
         <activity android:name=".ContactFeedback" />
         <activity android:name=".GenerateQR" />
         <activity android:name=".OrderSummary" />
