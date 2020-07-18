@@ -3,6 +3,7 @@
     package="com.example.campus_services">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -13,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CanteenFeedback"></activity>
+        <activity android:name=".ReadQR"></activity>
+        <activity android:name=".CanteenFeedback" />
         <activity android:name=".CanteenOrderDeliver" />
         <activity android:name=".CanteenOrderStatus" />
         <activity android:name=".ItemEdit" />

@@ -197,12 +197,12 @@ public class CanteenManager extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menuScanQR:
-                /*Intent intent = new Intent(this,ReadQR.class);
+                Intent intent = new Intent(this,ReadQR.class);
                 intent.putExtra("CanteenName",CanteenName);
                 intent.putExtra("OperationType","OrderStatus");
                 intent.putExtra("CanteenAvailable", CanteenAvailability);
                 startActivity(intent);
-                finish();*/
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
