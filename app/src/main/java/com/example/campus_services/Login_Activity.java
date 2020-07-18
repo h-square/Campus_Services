@@ -74,7 +74,7 @@ public class Login_Activity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
-                                            Toast.makeText(Login_Activity.this,"Email Verification Link is sended",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Login_Activity.this,"Email verification link is sent",Toast.LENGTH_LONG).show();
                                             FirebaseAuth.getInstance().signOut();
                                         } else{
                                             Toast.makeText(Login_Activity.this,"Error!!!" + task.getException().toString(),Toast.LENGTH_LONG).show();
