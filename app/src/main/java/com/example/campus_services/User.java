@@ -5,6 +5,8 @@ public class User {
     private String Contact;
     private String Virtual_Money;
     private String Image_Url;
+    private boolean Ban;
+
 
     public User(){ }
 
@@ -13,7 +15,9 @@ public class User {
         this.Contact = contact;
         this.Virtual_Money = vm;
         this.Image_Url = "";
+        this.Ban = false;
     }
+
 
     public String getName(){
         return Name;
@@ -42,5 +46,10 @@ public class User {
     public String getImage_Url() { return Image_Url; }
 
     public void setImage_Url(String image_Url) { Image_Url = image_Url; }
+
+
+    public void setBan(boolean ban) { Ban = ban; }
+
+    public boolean isBan() { return Ban; }
 
 }

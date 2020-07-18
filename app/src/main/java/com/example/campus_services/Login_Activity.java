@@ -69,53 +69,104 @@ public class Login_Activity extends AppCompatActivity {
                             final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                             final String student_id = email.substring(0,9);
 
+                            if(!(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())){
+                                FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(Login_Activity.this,"Email Verification Link is sended",Toast.LENGTH_LONG).show();
+                                            FirebaseAuth.getInstance().signOut();
+                                        } else{
+                                            Toast.makeText(Login_Activity.this,"Error!!!" + task.getException().toString(),Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                                return;
+                            }
+
                             databaseReference.child("Users").child("Canteen").child(uid).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists()){
                                         // forward to canteen's home activity
-                                        Canteen canteen = dataSnapshot.getValue(Canteen.class);
-                                        Intent intent = new Intent(Login_Activity.this,CanteenManager.class);
-                                        intent.putExtra("CanteenName", canteen.getName());
-                                        intent.putExtra("CanteenAvailable", canteen.getAvailable());
-                                        finish();
-                                        startActivity(intent);
-                                    }
-                                    else{
+                                        if((!(boolean)dataSnapshot.child("ban").getValue())) {
+                                            Canteen canteen = dataSnapshot.getValue(Canteen.class);
+                                            Intent intent = new Intent(Login_Activity.this, CanteenManager.class);
+                                            intent.putExtra("CanteenName", canteen.getName());
+                                            intent.putExtra("CanteenAvailable", canteen.getAvailable());
+                                            finish();
+                                            startActivity(intent);
+                                        }else{
+                                            showThatUserIsBanned();
+                                        }
+                                    } else{
                                         databaseReference.child("Users").child("Doctor").child(uid).addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 if(dataSnapshot.exists()){
                                                     // forward to doctor's home activity
-                                                }
-                                                else{
+                                                } else{
                                                     databaseReference.child("Users").child("Supervisor").child(uid).addValueEventListener(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                             if(dataSnapshot.exists()){
                                                                 // forward to supervisor's home activity
-                                                            }
-                                                            else{
-                                                                databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
-                                                                    @Override
-                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                        if(dataSnapshot.exists()){
-                                                                            Intent intent = new Intent(Login_Activity.this,HomeActivity.class);
-                                                                            finish();
-                                                                            startActivity(intent);
-                                                                        }
-                                                                        else{
-                                                                            Log.d("hello! = ", "1" );
-                                                                            FirebaseAuth.getInstance().signOut();
-                                                                        }
-                                                                    }
+                                                            } else{
+                                                                 databaseReference.child("Users").child("Admin").child(uid).addValueEventListener(new ValueEventListener() {
+                                                                     @Override
+                                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                         if(dataSnapshot.exists()){
+                                                                             // forward to admin home activity
+                                                                             Intent intent = new Intent(Login_Activity.this,AdminHome.class);
+                                                                             finish();
+                                                                             startActivity(intent);
+                                                                         } else{
+                                                                             databaseReference.child("Users").child("Professor").child(uid).addValueEventListener(new ValueEventListener() {
+                                                                                 @Override
+                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                     if(dataSnapshot.exists()){
+                                                                                         // forward to professor home activity
+                                                                                     } else{
+                                                                                         databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
+                                                                                             @Override
+                                                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                                 if(dataSnapshot.exists()){
+                                                                                                     if((!(boolean)dataSnapshot.child("ban").getValue())) {
+                                                                                                         Intent intent = new Intent(Login_Activity.this, HomeActivity.class);
+                                                                                                         finish();
+                                                                                                         startActivity(intent);
+                                                                                                     }else{
+                                                                                                         showThatUserIsBanned();
+                                                                                                     }
+                                                                                                 }
+                                                                                                 else{
+                                                                                                     //Log.d("hello! = ", "1" );
+                                                                                                     FirebaseAuth.getInstance().signOut();
+                                                                                                 }
+                                                                                             }
 
-                                                                    @Override
-                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                                             @Override
+                                                                                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                                                    }
-                                                                });
+                                                                                             }
+                                                                                         });
+                                                                                     }
 
+                                                                                 }
+
+                                                                                 @Override
+                                                                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                                 }
+                                                                             });
+                                                                         }
+                                                                     }
+
+                                                                     @Override
+                                                                     public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                     }
+                                                                 });
                                                             }
                                                         }
 
@@ -160,5 +211,10 @@ public class Login_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void showThatUserIsBanned(){
+        Toast.makeText(Login_Activity.this,"Your account is banned by the Admin.",Toast.LENGTH_LONG).show();
+        FirebaseAuth.getInstance().signOut();
     }
 }

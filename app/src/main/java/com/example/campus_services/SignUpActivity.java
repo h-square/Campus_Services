@@ -33,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-
+    public static final String USER_TYPE_KEY = "type";
 
     private void Register(){
         String email=etEmail.getText().toString().trim().toLowerCase();
@@ -142,6 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if(dataSnapshot.exists()){
                                     Intent intent = new Intent(SignUpActivity.this,SignUp_Non_Student.class);
+                                    intent.putExtra(USER_TYPE_KEY,dataSnapshot.getValue().toString());
                                     finish();
                                     startActivity(intent);
                                 }

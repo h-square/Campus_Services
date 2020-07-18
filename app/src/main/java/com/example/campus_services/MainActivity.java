@@ -40,14 +40,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            Log.d("hi","1");
             Intent intent = new Intent(MainActivity.this,Login_Activity.class);
             finish();
             startActivity(intent);
-        }
-        else{
+        } else{
             final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             final String student_id = email.substring(0,9);
@@ -57,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
                         // forward to canteen's home activity
-                        Canteen canteen = dataSnapshot.getValue(Canteen.class);
-                        Intent intent = new Intent(MainActivity.this,CanteenManager.class);
-                        intent.putExtra("CanteenName", canteen.getName());
-                        intent.putExtra("CanteenAvailable", canteen.getAvailable());
-                        finish();
-                        startActivity(intent);
+                        if((!(boolean)dataSnapshot.child("ban").getValue())) {
+                            Canteen canteen = dataSnapshot.getValue(Canteen.class);
+                            Intent intent = new Intent(MainActivity.this, CanteenManager.class);
+                            intent.putExtra("CanteenName", canteen.getName());
+                            intent.putExtra("CanteenAvailable", canteen.getAvailable());
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            showThatUserIsBanned();
+                        }
                     }
                     else{
                         databaseReference.child("Users").child("Doctor").child(uid).addValueEventListener(new ValueEventListener() {
@@ -79,20 +80,54 @@ public class MainActivity extends AppCompatActivity {
                                                 // forward to supervisor's home activity
                                             }
                                             else{
-                                                databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
+                                                databaseReference.child("Users").child("Admin").child(uid).addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         if(dataSnapshot.exists()){
-                                                            Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                                                            Intent intent = new Intent(MainActivity.this, AdminHome.class);
                                                             finish();
                                                             startActivity(intent);
-                                                        }
-                                                        else{
-                                                            Log.d("hello! = ", "1" );
-                                                            FirebaseAuth.getInstance().signOut();
-                                                            Intent intent = new Intent(MainActivity.this,Login_Activity.class);
-                                                            finish();
-                                                            startActivity(intent);
+                                                        }else{
+                                                            databaseReference.child("Users").child("Professor").child(uid).addValueEventListener(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                    if(dataSnapshot.exists()){
+                                                                        // forward to professor's home activity
+                                                                    } else{
+                                                                        databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                if(dataSnapshot.exists()){
+                                                                                    if((!(boolean)dataSnapshot.child("ban").getValue())) {
+                                                                                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+
+                                                                                        finish();
+                                                                                        startActivity(intent);
+                                                                                    }else{
+                                                                                        showThatUserIsBanned();
+                                                                                    }
+                                                                                }
+                                                                                else{
+                                                                                    FirebaseAuth.getInstance().signOut();
+                                                                                    Intent intent = new Intent(MainActivity.this,Login_Activity.class);
+                                                                                    finish();
+                                                                                    startActivity(intent);
+                                                                                }
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                }
+                                                            });
                                                         }
                                                     }
 
@@ -101,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
                                                     }
                                                 });
-
                                             }
                                         }
 
@@ -126,10 +160,15 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
-
         }
+    }
 
+    public void showThatUserIsBanned(){
+        Toast.makeText(MainActivity.this,"Your account is banned by the Admin.",Toast.LENGTH_LONG).show();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this,Login_Activity.class);
+        finish();
+        startActivity(intent);
     }
 
 }

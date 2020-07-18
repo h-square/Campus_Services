@@ -9,34 +9,34 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SD_Register_Appointment extends AppCompatActivity {
+public class Doctor_Profile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_s_d__register__appointment);
+        setContentView(R.layout.activity_doctor__profile);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setSelectedItemId(R.id.sd_register_appointment);
+        bottomNavigationView.setSelectedItemId(R.id.doctor_profile);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case  R.id.sd_register_appointment:
-                        return true;
-
-                    case R.id.sd_appointments:
+                    case  R.id.doctor_pending_appointments:
                         finish();
-                        startActivity(new Intent(SD_Register_Appointment.this,SD_Appointments.class));
+                        startActivity(new Intent(Doctor_Profile.this,Doctor_Pending_Appointments.class));
                         overridePendingTransition(0,0);
                         return true;
 
-                    case R.id.sd_appointment_history:
+                    case R.id.doctor_list_appointments:
                         finish();
-                        startActivity(new Intent(SD_Register_Appointment.this,SD_Appointment_History.class));
+                        startActivity(new Intent(Doctor_Profile.this,Doctor_List_Appointments.class));
                         overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.doctor_profile:
                         return true;
                 }
                 return false;
@@ -46,8 +46,9 @@ public class SD_Register_Appointment extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        Intent intent = new Intent(SD_Register_Appointment.this,HomeActivity.class);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }

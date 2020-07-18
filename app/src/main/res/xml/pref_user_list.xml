@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_true"
+        android:key="@string/pref_ban_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_ban_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_true"
+        android:key="@string/pref_Student_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_Student_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_true"
+        android:key="@string/pref_Professor_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_Professor_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_true"
+        android:key="@string/pref_Canteen_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_Canteen_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_true"
+        android:key="@string/pref_Doctor_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_Doctor_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_true"
+        android:key="@string/pref_Supervisor_key"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        android:title="@string/pref_Supervisor_title" />
+
+</PreferenceScreen>
