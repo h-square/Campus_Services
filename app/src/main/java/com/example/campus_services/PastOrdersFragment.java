@@ -1,14 +1,18 @@
 package com.example.campus_services;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +25,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CanteenOrderStatus extends AppCompatActivity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PastOrdersFragment extends Fragment {
+
+    public PastOrdersFragment() {
+        // Required empty public constructor
+    }
 
     private TextView PendingOrderNumber, StatusType;
     private ListView listView;
@@ -31,18 +43,19 @@ public class CanteenOrderStatus extends AppCompatActivity {
     private int count=0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canteen_order_status);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_past_orders, container, false);
 
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         CanteenName = intent.getStringExtra("CanteenName");
-        OperationType = intent.getStringExtra("OperationType");
+        OperationType = "Current Orders";
         CanteenAvailable = intent.getStringExtra("CanteenAvailable");
 
-        PendingOrderNumber = (TextView) findViewById(R.id.tvPendingOrderCanteen);
-        StatusType = (TextView) findViewById(R.id.tvCanteenOrderStatusType);
-        listView = (ListView) findViewById(R.id.lvPendingOrderCanteen);
+        PendingOrderNumber = (TextView) rootView.findViewById(R.id.tvPendingOrderCanteen);
+        StatusType = (TextView) rootView.findViewById(R.id.tvCanteenOrderStatusType);
+        listView = (ListView) rootView.findViewById(R.id.lvPendingOrderCanteen);
         mItemName= new ArrayList<>();
         OrderNo = new ArrayList<>();
         Customers = new ArrayList<>();
@@ -50,19 +63,20 @@ public class CanteenOrderStatus extends AppCompatActivity {
         saveOrderNumber = new ArrayList<>();
         OrderDetails= new ArrayList<>();
         paymentMethod = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
+        arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.dish_info,R.id.dishnameid,mItemName);
         PendingOrderNumber.setText(Integer.toString(count));
 
 //        if (OperationType.equals("OrderHistory")){
-//
+//            StatusType.setText("Past Orders: ");
+//            table_name = "DeliveredOrders";
 //        }
 //        else {
 //            StatusType.setText("Pending Orders: ");
 //            table_name = "CurrentOrders";
 //        }
 
-        StatusType.setText("Past Orders: ");
-        table_name = "DeliveredOrders";
+        StatusType.setText("Pending Orders: ");
+        table_name = "CurrentOrders";
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_curr_orders = database.getReference(table_name);
@@ -95,7 +109,10 @@ public class CanteenOrderStatus extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CanteenOrderStatus.this,CanteenOrderDeliver.class);
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE).edit();
+                editor.putInt("position",1);
+                editor.apply();
+                Intent intent = new Intent(getActivity().getApplicationContext(),CanteenOrderDeliver.class);
                 intent.putExtra("CanteenName",CanteenName);
                 intent.putExtra("OrderBasic", mItemName.get(position));
                 intent.putExtra("OrderNo",OrderNo.get(position));
@@ -106,22 +123,13 @@ public class CanteenOrderStatus extends AppCompatActivity {
                 intent.putExtra("CookingInstruction",CookingInstruction.get(position));
                 intent.putExtra("CanteenAvailable", CanteenAvailable);
                 intent.putExtra("PaymentMethod",paymentMethod.get(position));
-                CanteenOrderStatus.this.finish();
+                getActivity().finish();
                 startActivity(intent);
             }
         });
 
-    }
+        onResume();
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(CanteenOrderStatus.this,CanteenManager.class);
-        intent.putExtra("CanteenName",CanteenName);
-        intent.putExtra("CanteenAvailable", CanteenAvailable);
-        CanteenOrderStatus.this.finish();
-        startActivity(intent);
-
+        return rootView;
     }
 }

@@ -179,13 +179,20 @@ public class CanteenOrderDeliver extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(CanteenOrderDeliver.this,CanteenOrderStatus.class);
-        intent.putExtra("CanteenName",CanteenName);
-        intent.putExtra("OperationType",OperationType);
-        intent.putExtra("CanteenAvailable", CanteenAvailable);
-        finish();
-        startActivity(intent);
-
+        if(OperationType.equals("OrderHistory")){
+            Intent intent = new Intent(CanteenOrderDeliver.this,CanteenOrderStatus.class);
+            intent.putExtra("CanteenName",CanteenName);
+            intent.putExtra("OperationType",OperationType);
+            intent.putExtra("CanteenAvailable", CanteenAvailable);
+            finish();
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(CanteenOrderDeliver.this,CanteenManager.class);
+            intent.putExtra("CanteenName",CanteenName);
+            intent.putExtra("CanteenAvailable",CanteenAvailable);
+            finish();
+            startActivity(intent);
+        }
     }
 }

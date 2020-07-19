@@ -11,10 +11,6 @@
         android:title="Contact/Feedback"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/menuCanteenStatus"
-        android:title="Order Status"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/menuCanteenOrderHistory"
         android:title="Order History"
         app:showAsAction="never"/>
