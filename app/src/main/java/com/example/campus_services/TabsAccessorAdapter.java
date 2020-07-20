@@ -21,6 +21,9 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
             case 1:
                 PastOrdersFragment pastOrdersFragment = new PastOrdersFragment();
                 return pastOrdersFragment;
+            case 2:
+                ProfessorCurrentOrdersFragment professorCurrentOrdersFragment = new ProfessorCurrentOrdersFragment();
+                return professorCurrentOrdersFragment;
             default:
                 return null;
         }
@@ -28,7 +31,7 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -39,6 +42,8 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
                 return "Menu";
             case 1:
                 return "Pending Orders";
+            case 2:
+                return "Professor Orders";
             default:
                 return null;
         }

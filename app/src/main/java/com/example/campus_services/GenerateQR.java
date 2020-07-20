@@ -94,4 +94,13 @@ public class GenerateQR extends AppCompatActivity {
             Log.e("QrGenerate",er.getMessage());
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),OrderStatus.class);
+        intent.putExtra("OperationType","OrderStatus");
+        finish();
+        startActivity(intent);
+    }
 }

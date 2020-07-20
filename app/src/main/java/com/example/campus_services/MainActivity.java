@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                     if(dataSnapshot.exists()){
                                                                         // forward to professor's home activity
+                                                                        if((!(boolean)dataSnapshot.child("ban").getValue())) {
+                                                                            Intent intent = new Intent(MainActivity.this, CanteenOrderActivity.class);
+                                                                            finish();
+                                                                            startActivity(intent);
+                                                                        }else{
+                                                                            showThatUserIsBanned();
+                                                                        }
                                                                     } else{
                                                                         databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
                                                                             @Override

@@ -31,7 +31,7 @@ import java.util.Date;
 
 public class PlaceOrder extends AppCompatActivity implements View.OnClickListener{
 
-    private String CanteenName,OrderString,customerId,canteenID;
+    private String CanteenName,OrderString,customerId,canteenID, userID, user;
     private Button PlaceOrderB,changePaymentMethod;
     private TextView amt,currentBalance,paymentMethod;
     private EditText CookingInstruction;
@@ -92,11 +92,29 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
         mItemName= new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
 
+        userID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        if(userID.charAt(0)>='0' && userID.charAt(0)<='9'){
+            user="Student";
+        }
+        else{
+            user="Professor";
+        }
+        int it=0;
+        while(userID.charAt(it) != '@') {
+            it++;
+        }
+        if(user.equals("Professor")){
+            userID = mAuth.getCurrentUser().getUid();
+        }
+        else {
+            userID = userID.substring(0, it);
+        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user2 = firebaseAuth.getCurrentUser();
-        final String userid = user2.getEmail().substring(0,9);
+        final String userid = userID;
         final FirebaseDatabase db3 = FirebaseDatabase.getInstance();
-        db4 = db3.getReference("Users/Student");
+        db4 = db3.getReference("Users/"+user);
         newlistner =  db4.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -246,7 +264,7 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
 
                     if (currentPaymentMethod.equals("1")){
                         final FirebaseDatabase dab = FirebaseDatabase.getInstance();
-                        final DatabaseReference tab = dab.getReference("Users/Student/" + customerId);
+                        final DatabaseReference tab = dab.getReference("Users/"+ user + "/" + customerId);
                         tab.child("virtual_Money").setValue(Integer.toString(Integer.parseInt(availableBalance)-amount));
                         final DatabaseReference lab = dab.getReference("Users/Canteen/" + canteenID);
                         lab.addValueEventListener(new ValueEventListener() {

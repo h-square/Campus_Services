@@ -29,9 +29,9 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PastOrdersFragment extends Fragment {
+public class ProfessorCurrentOrdersFragment extends Fragment {
 
-    public PastOrdersFragment() {
+    public ProfessorCurrentOrdersFragment() {
         // Required empty public constructor
     }
 
@@ -46,7 +46,7 @@ public class PastOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_past_orders, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_professor_current_orders, container, false);
 
         Intent intent = getActivity().getIntent();
         CanteenName = intent.getStringExtra("CanteenName");
@@ -66,15 +66,6 @@ public class PastOrdersFragment extends Fragment {
         arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.dish_info,R.id.dishnameid,mItemName);
         PendingOrderNumber.setText(Integer.toString(count));
 
-//        if (OperationType.equals("OrderHistory")){
-//            StatusType.setText("Past Orders: ");
-//            table_name = "DeliveredOrders";
-//        }
-//        else {
-//            StatusType.setText("Pending Orders: ");
-//            table_name = "CurrentOrders";
-//        }
-
         StatusType.setText("Pending Orders: ");
         table_name = "CurrentOrders";
 
@@ -86,7 +77,7 @@ public class PastOrdersFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Order order = ds.getValue(Order.class);
-                    if(order.getCustomerId().charAt(0)>='0' && order.getCustomerId().charAt(0)<='9') {
+                    if(order.getCustomerId().charAt(0)<'0' || order.getCustomerId().charAt(0)>'9') {
                         mItemName.add("Order No: " + order.getOrderNo() + "\nCustomerID: " + order.getCustomerId());
                         OrderNo.add(order.getOrderNo());
                         Customers.add(order.getCustomerId());
@@ -112,7 +103,7 @@ public class PastOrdersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE).edit();
-                editor.putInt("position",1);
+                editor.putInt("position",2);
                 editor.apply();
                 Intent intent = new Intent(getActivity().getApplicationContext(),CanteenOrderDeliver.class);
                 intent.putExtra("CanteenName",CanteenName);

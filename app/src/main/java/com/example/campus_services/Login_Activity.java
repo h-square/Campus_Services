@@ -3,6 +3,7 @@ package com.example.campus_services;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -31,6 +32,7 @@ public class Login_Activity extends AppCompatActivity {
     private Button vbtnLogin;
     private TextView vSignup,vForgotPassword;
     private DatabaseReference databaseReference;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class Login_Activity extends AppCompatActivity {
         vbtnLogin = (Button) findViewById(R.id.btnLogin);
         vSignup = (TextView) findViewById(R.id.Signup);
         vForgotPassword = (TextView) findViewById(R.id.ForgotPassword);
+        progressDialog = new ProgressDialog(this);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -61,9 +64,13 @@ public class Login_Activity extends AppCompatActivity {
                     return;
                 }
 
+                progressDialog.setMessage("Logging In...");
+                progressDialog.show();
+
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
                         if(task.isSuccessful()){
                             final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -126,6 +133,13 @@ public class Login_Activity extends AppCompatActivity {
                                                                                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                                      if(dataSnapshot.exists()){
                                                                                          // forward to professor home activity
+                                                                                         if((!(boolean)dataSnapshot.child("ban").getValue())) {
+                                                                                             Intent intent = new Intent(Login_Activity.this, CanteenOrderActivity.class);
+                                                                                             finish();
+                                                                                             startActivity(intent);
+                                                                                         }else{
+                                                                                             showThatUserIsBanned();
+                                                                                         }
                                                                                      } else{
                                                                                          databaseReference.child("Users").child("Student").child(student_id).addValueEventListener(new ValueEventListener() {
                                                                                              @Override
@@ -196,7 +210,7 @@ public class Login_Activity extends AppCompatActivity {
 
                         }
                         else{
-                            Toast.makeText(Login_Activity.this,"Please SignUp first",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login_Activity.this,"Incorrect Credentials!",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

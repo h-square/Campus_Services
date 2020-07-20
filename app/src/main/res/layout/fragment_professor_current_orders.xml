@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfessorCurrentOrdersFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="19">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="32dp" >
+            <TextView
+                android:id="@+id/tvCanteenOrderStatusType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Orders: "
+                android:textSize="32dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:paddingLeft="16dp"/>
+            <TextView
+                android:id="@+id/tvPendingOrderCanteen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15"
+                android:textSize="32dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:paddingLeft="8dp"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvPendingOrderCanteen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

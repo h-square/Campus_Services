@@ -35,7 +35,7 @@ public class ReadQR extends AppCompatActivity implements ZXingScannerView.Result
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 1);
-            Toast.makeText(getApplicationContext(),"Permission",Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"Permission",Toast.LENGTH_LONG).show();
         }
 
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view

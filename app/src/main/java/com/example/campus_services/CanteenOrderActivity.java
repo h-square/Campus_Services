@@ -32,7 +32,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
     private ListView CanteenList;
     private ArrayList<String> canteens,available;
     private ArrayAdapter<String> arrayAdapter;
-    private String userID;
+    private String userID,user;
 
     private DatabaseReference table_user;
     private ValueEventListener listener;
@@ -51,10 +51,22 @@ public class CanteenOrderActivity extends AppCompatActivity {
         tvBalance = findViewById(R.id.tvBalance);
         CanteenList = findViewById(R.id.CanteenList);
         userID = mAuth.getCurrentUser().getEmail();
+        if(userID.charAt(0)>='0' && userID.charAt(0)<='9'){
+            user="Student";
+        }
+        else{
+            user="Professor";
+        }
         int i=0;
-        while(userID.charAt(i) != '@')
+        while(userID.charAt(i) != '@') {
             i++;
-        userID = userID.substring(0,i);
+        }
+        if(user.equals("Professor")){
+            userID = mAuth.getCurrentUser().getUid();
+        }
+        else {
+            userID = userID.substring(0, i);
+        }
 
         canteens = new ArrayList<>();
         available = new ArrayList<>();
@@ -68,7 +80,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
         getCanteenList();
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        table_user = db.getReference("Users").child("Student");
+        table_user = db.getReference("Users").child(user);
         listener = table_user.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,6 +141,20 @@ public class CanteenOrderActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(user.equals("Student"))
+        {
+            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+            finish();
+            startActivity(intent);
+        }
+        else{
+            finish();
+        }
     }
 
     @Override
