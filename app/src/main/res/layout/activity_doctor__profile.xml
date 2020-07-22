@@ -1,18 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Doctor_Profile">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Profile"
-        android:textSize="30dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/Doctor_Profile_Image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/default_profile_image"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2.5dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/Doctor_Profile_Image_Selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="200dp"
+                android:src="@drawable/ic_select_profile_image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Doctor_Profile_Image_Selector"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Doctor_Profile_User_Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/student_profile_text_background"
+                    android:drawableEnd="@drawable/ic_edit_icon"
+                    android:text="User Name"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/Doctor_Profile_Phone_Number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/student_profile_text_background"
+                    android:drawableEnd="@drawable/ic_edit_icon"
+                    android:inputType="phone"
+                    android:text="Phone Number"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/Doctor_Profile_Slot_Spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save Slot"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:id="@+id/saveSlotNumberbtn"
+                    android:textColor="#000000"/>
+
+                <Button
+                    android:id="@+id/Doctor_Profile_Logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_button_0"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -24,6 +110,6 @@
         app:itemBackground="@color/light_blue"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/doctor_bottom_navigation"/>
+        app:menu="@menu/doctor_bottom_navigation" />
 
 </RelativeLayout>

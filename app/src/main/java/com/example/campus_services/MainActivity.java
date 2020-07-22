@@ -71,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if(dataSnapshot.exists()){
                                     // forward to doctor's home activity
+                                    if((!(boolean)dataSnapshot.child("ban").getValue())){
+                                        Intent intent = new Intent(MainActivity.this,Doctor_Profile.class);
+                                        finish();
+                                        Log.d("xyz","111");
+                                        startActivity(intent);
+                                    }else{
+                                        showThatUserIsBanned();
+                                    }
                                 }
                                 else{
                                     databaseReference.child("Users").child("Supervisor").child(uid).addValueEventListener(new ValueEventListener() {
@@ -78,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if(dataSnapshot.exists()){
                                                 // forward to supervisor's home activity
+
                                             }
                                             else{
                                                 databaseReference.child("Users").child("Admin").child(uid).addValueEventListener(new ValueEventListener() {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Batch Confirm"
+        android:id="@+id/batch_confirm_pa"
+        />
+
+    <item
+        android:title="Clear All"
+        android:id="@+id/clear_all_pa"/>
+
+</menu>

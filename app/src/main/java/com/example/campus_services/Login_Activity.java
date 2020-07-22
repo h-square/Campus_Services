@@ -112,6 +112,13 @@ public class Login_Activity extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 if(dataSnapshot.exists()){
                                                     // forward to doctor's home activity
+                                                    if((!(boolean)dataSnapshot.child("ban").getValue())){
+                                                        Intent intent = new Intent(Login_Activity.this,Doctor_Profile.class);
+                                                        finish();
+                                                        startActivity(intent);
+                                                    }else{
+                                                        showThatUserIsBanned();
+                                                    }
                                                 } else{
                                                     databaseReference.child("Users").child("Supervisor").child(uid).addValueEventListener(new ValueEventListener() {
                                                         @Override

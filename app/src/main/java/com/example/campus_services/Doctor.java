@@ -3,40 +3,45 @@ package com.example.campus_services;
 public class Doctor {
     private String Name;
     private String Email;
-    private String Conatct;
-    private String Slot;
+    private String Contact;
+    private int Slot;
+    private String Image_Url;
     private boolean Ban;
 
     public Doctor() {
     }
 
-    public Doctor(String name, String email, String conatct, String slot) {
+    public Doctor(String name, String email, String contact, int slot) {
         Name = name;
         Email = email;
-        Conatct = conatct;
+        Contact = contact;
         Slot = slot;
         this.Ban = false;
+        this.Image_Url = "";
     }
 
     public String getName() { return Name; }
 
     public String getEmail() { return Email; }
 
-    public String getConatct() { return Conatct; }
+    public void setImage_Url(String image_Url) { Image_Url = image_Url; }
 
-    public String getSlot() { return Slot; }
+    public String getImage_Url() { return Image_Url; }
+
+    public String getContact() { return Contact; }
+
+    public int getSlot() { return Slot; }
 
     public void setName(String name) { Name = name; }
 
     public void setEmail(String email) { Email = email; }
 
-    public void setConatct(String conatct) { Conatct = conatct; }
+    public void setContact(String contact) { Contact = contact; }
 
-    public void setSlot(String slot) { Slot = slot; }
+    public void setSlot(int slot) { Slot = slot; }
 
     public void setBan(boolean ban) { Ban = ban; }
 
     public boolean isBan() { return Ban; }
-
 
 }

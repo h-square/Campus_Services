@@ -37,32 +37,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Student_Profile_Image_Selector"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/student_profile_text_background"
                     android:drawableEnd="@drawable/ic_edit_icon"
                     android:text="User Name"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:id="@+id/Student_Profile_User_Name"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/student_profile_text_background"
                     android:drawableEnd="@drawable/ic_edit_icon"
                     android:text="Phone Number"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:id="@+id/Student_Profile_Phone_Number"
                     android:inputType="phone"/>
 
@@ -73,9 +73,9 @@
                     android:layout_gravity="center_horizontal"
                     android:text="Logout"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textAllCaps="false"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/custom_button_0"/>
             </LinearLayout>
 

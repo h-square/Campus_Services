@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context=".SignUpActivity">
 
     <LinearLayout
@@ -121,9 +121,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:text="Sign Up"
             android:background="@drawable/custom_button_0"
-            android:textColor="#ffffff"/>
+            android:text="Sign Up"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/tvLogin"
@@ -141,13 +141,13 @@
             android:id="@+id/Non_Student_SignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SignUp For Non Students"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
+            android:text="SignUp For Non Students"
             android:textColor="@android:color/black"
-            android:textSize="17sp"/>
+            android:textSize="17sp" />
     </LinearLayout>
 </ScrollView>

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 public class Student_Profile extends AppCompatActivity {
 
-    private int GalleryImageSelector = 0;
+    private static final int GalleryImageSelector = 0;
     private CircleImageView vStudent_Profile_Image,vStudent_Profile_Image_Selector;
     private TextView vStudent_Profile_User_Name,vStudent_Profile_Phone_Number;
     private Button vStudent_Profile_Logout;
@@ -110,7 +111,7 @@ public class Student_Profile extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = vStudent_Profile_Edit_Text.getText().toString().trim();
-                        databaseReference.child("Users").child("Student").child(Student_Id).child("Name").setValue(name);
+                        databaseReference.child("Users").child("Student").child(Student_Id).child("name").setValue(name);
                     }
                 });
 
@@ -135,13 +136,14 @@ public class Student_Profile extends AppCompatActivity {
                 mbuilder.setTitle("Edit Phone Number");
 
                 final EditText vStudent_Profile_Edit_Text = mview.findViewById(R.id.Student_Profile_Edit_Text);
+                vStudent_Profile_Edit_Text.setInputType(InputType.TYPE_CLASS_PHONE);
                 vStudent_Profile_Edit_Text.setText(vStudent_Profile_Phone_Number.getText().toString());
 
                 mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String number = vStudent_Profile_Edit_Text.getText().toString().trim();
-                        databaseReference.child("Users").child("Student").child(Student_Id).child("Contact").setValue(number);
+                        databaseReference.child("Users").child("Student").child(Student_Id).child("contact").setValue(number);
                     }
                 });
 

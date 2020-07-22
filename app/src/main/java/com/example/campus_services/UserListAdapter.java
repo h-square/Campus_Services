@@ -78,7 +78,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     }
 
     public void setUserData(ArrayList<String> userName,ArrayList<String> userType,ArrayList<String> uid){
-
         mUserName = userName;
         mUserType = userType;
         mUserUid = uid;

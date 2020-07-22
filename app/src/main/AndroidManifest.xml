@@ -31,7 +31,6 @@
         <activity android:name=".SignUp_Non_Student" />
         <activity android:name=".Login_Activity" />
         <activity android:name=".Student_Profile" />
-        <activity android:name=".SD_Register_Appointment" />
         <activity android:name=".CanteenManager" />
         <activity android:name=".CanteenMenu" />
         <activity android:name=".CanteenOrderActivity" />
@@ -39,6 +38,12 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AdminHome" />
         <activity android:name=".UserList_Item_Details" />
+        <activity android:name=".Doctor_Profile"/>
+        <activity android:name=".Doctor_List_Appointments"/>
+        <activity android:name=".Doctor_Pending_Appointments"/>
+        <activity android:name=".SD_Register_Appointment" />
+        <activity android:name=".SD_Appointments"/>
+        <activity android:name=".SD_Appointment_History"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

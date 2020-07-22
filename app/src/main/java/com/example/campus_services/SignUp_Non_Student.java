@@ -97,7 +97,7 @@ public class SignUp_Non_Student extends AppCompatActivity {
                                 databaseReference.child("Users").child("Canteen").child(Uid).setValue(canteen);
                             }
                             else if(Type.equals("Doctor")){
-                                Doctor doctor = new Doctor(name,email,phoneNumber,"");
+                                Doctor doctor = new Doctor(name,email,phoneNumber,0);
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 databaseReference.child("Users").child("Doctor").child(uid).setValue(doctor);
                             }
