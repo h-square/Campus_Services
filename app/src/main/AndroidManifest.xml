@@ -14,6 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SupervisiorMain"></activity>
+        <activity android:name=".PreviousComplains" />
+        <activity android:name=".ComplainActivityMain" />
         <activity android:name=".ReadQR" />
         <activity android:name=".CanteenFeedback" />
         <activity android:name=".CanteenOrderDeliver" />
@@ -38,12 +41,12 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".AdminHome" />
         <activity android:name=".UserList_Item_Details" />
-        <activity android:name=".Doctor_Profile"/>
-        <activity android:name=".Doctor_List_Appointments"/>
-        <activity android:name=".Doctor_Pending_Appointments"/>
+        <activity android:name=".Doctor_Profile" />
+        <activity android:name=".Doctor_List_Appointments" />
+        <activity android:name=".Doctor_Pending_Appointments" />
         <activity android:name=".SD_Register_Appointment" />
-        <activity android:name=".SD_Appointments"/>
-        <activity android:name=".SD_Appointment_History"/>
+        <activity android:name=".SD_Appointments" />
+        <activity android:name=".SD_Appointment_History" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

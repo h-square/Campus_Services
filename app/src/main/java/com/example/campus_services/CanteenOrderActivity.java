@@ -118,16 +118,17 @@ public class CanteenOrderActivity extends AppCompatActivity {
     private void getCanteenList(){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_canteen = database.getReference("Users/Canteen");
-        table_canteen.addValueEventListener(new ValueEventListener() {
+        table_canteen.addValueEventListener(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
 
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot ds: dataSnapshot.getChildren()) {
                     Canteen item = ds.getValue(Canteen.class);
                     if (item.getAvailable().equals("1")) {
                         canteens.add(item.getName() + "\nAvailable");
-                    }
-                    else{
+                    } else {
                         canteens.add(item.getName() + "\nUnavailable");
                     }
                     available.add(item.getAvailable());

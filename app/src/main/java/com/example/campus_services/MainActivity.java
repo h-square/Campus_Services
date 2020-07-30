@@ -86,13 +86,16 @@ public class MainActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if(dataSnapshot.exists()){
                                                 // forward to supervisor's home activity
-
+                                                Intent intent = new Intent(MainActivity.this, SupervisiorMain.class);
+                                                finish();
+                                                startActivity(intent);
                                             }
                                             else{
                                                 databaseReference.child("Users").child("Admin").child(uid).addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                        if(dataSnapshot.exists()){
+                                                        if(dataSnapshot.exists())
+                                                        {
                                                             Intent intent = new Intent(MainActivity.this, AdminHome.class);
                                                             finish();
                                                             startActivity(intent);
