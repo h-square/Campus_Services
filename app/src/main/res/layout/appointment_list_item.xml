@@ -7,60 +7,103 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/ALI_Name"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Name"
-            android:textColor="#000000"
-            android:textSize="24sp"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/ALI_Date"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/ALI_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Name"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ALI_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Date"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ALI_Slot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:text="Slot"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Date"
-            android:textColor="#000000"
-            android:textSize="24sp"/>
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/ALI_Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Time"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/ALI_Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textSize="16sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/ALI_ATime_LL"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/ALI_Time"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Time"
+            android:text="Appointment Time : "
             android:textColor="#000000"
-            android:textSize="24sp"/>
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/ALI_Slot"
-            android:layout_width="0dp"
+            android:id="@+id/ALI_ATime"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Slot"
+            android:text="12:35"
             android:textColor="#000000"
-            android:textSize="24sp" />
-
+            android:textSize="16sp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#dadada" />
+        android:background="#dadada"
+        />
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -18,7 +19,8 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     public ArrayList<Appointment> mAppointments;
 
     public class AppointmentListAdapterViewHolder extends RecyclerView.ViewHolder {
-            public final TextView vALI_Name,vALI_Date,vALI_Time,vALI_Slot;
+            public final TextView vALI_Name,vALI_Date,vALI_Time,vALI_Slot,vALI_ATime,vALI_Status;
+            public final LinearLayout vALI_ATime_LL;
 
         public AppointmentListAdapterViewHolder(View view) {
             super(view);
@@ -26,6 +28,9 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             vALI_Date = (TextView) view.findViewById(R.id.ALI_Date);
             vALI_Time = (TextView) view.findViewById(R.id.ALI_Time);
             vALI_Slot = (TextView) view.findViewById(R.id.ALI_Slot);
+            vALI_ATime = (TextView) view.findViewById(R.id.ALI_ATime);
+            vALI_Status = (TextView) view.findViewById(R.id.ALI_Status);
+            vALI_ATime_LL = (LinearLayout) view.findViewById(R.id.ALI_ATime_LL);
         }
 
     }
@@ -48,11 +53,21 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String date = mAppointments.get(position).getDate();
         String time = CalendarUtils.convertTimeFromSectoHHMM(mAppointments.get(position).getTime());
         String slot = "Slot-" + String.valueOf(mAppointments.get(position).getSlot());
+        String status = mAppointments.get(position).getStatus();
+        long appointmentTime = mAppointments.get(position).getArrival_Time();
+
+        if(appointmentTime == -1){
+            appointmentListAdapterViewHolder.vALI_ATime_LL.setVisibility(View.GONE);
+        }else{
+            String aT = CalendarUtils.convertTimeFromSectoHHMM(appointmentTime);
+            appointmentListAdapterViewHolder.vALI_ATime.setText(aT);
+        }
 
         appointmentListAdapterViewHolder.vALI_Name.setText(name);
         appointmentListAdapterViewHolder.vALI_Date.setText(date);
         appointmentListAdapterViewHolder.vALI_Time.setText(time);
         appointmentListAdapterViewHolder.vALI_Slot.setText(slot);
+        appointmentListAdapterViewHolder.vALI_Status.setText(status);
     }
 
     @Override

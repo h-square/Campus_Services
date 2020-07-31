@@ -109,7 +109,7 @@ public class Doctor_Profile extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("Users").child("Doctor").child(Uid).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users").child("Doctor").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -208,11 +208,36 @@ public class Doctor_Profile extends AppCompatActivity {
 
         vDoctor_Profile_Slot_Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(initialSelectedPosition != position) {
-                    showSlotSavebtn();
-                }else{
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                if(initialSelectedPosition == position) {
                     hideSlotSavebtn();
+                }else{
+                    databaseReference.child("Users").child("Doctor").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            int f = 0;
+                            for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                                if(!Uid.equals(dataSnapshot1.getKey())){
+                                    Doctor doc = dataSnapshot1.getValue(Doctor.class);
+                                    if(doc.getSlot() == position){
+                                        f = 1;
+                                    }
+                                }
+                            }
+                            if(f == 1 && position != 0){
+                                Toast.makeText(Doctor_Profile.this,"There is already another doctor for this slot",Toast.LENGTH_SHORT).show();
+                                hideSlotSavebtn();
+                            }else{
+                                showSlotSavebtn();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
 
@@ -313,7 +338,7 @@ public class Doctor_Profile extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         Appointment ap = dataSnapshot1.getValue(Appointment.class);
-                        if(!(CalendarUtils.isTomorrow(ap.getDate()))){
+                        if(CalendarUtils.isPastAppointment(ap.getDate(),ap.getSlot())){
                             String key = databaseReference.child("Appointment_History").push().getKey();
                             databaseReference.child("Appointment_History").child(ap.getStudent_Id()).child(key).setValue(ap);
                             databaseReference.child("Appointments").child(SLOT).child(ap.getStudent_Id()).removeValue();
