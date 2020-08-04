@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SupervisiorMain"></activity>
+        <activity android:name=".SupervisorMainReso"></activity>
+        <activity android:name=".SupervisorMainOngo" />
+        <activity android:name=".OngoToResoCom" />
+        <activity android:name=".ResoPreviousComplains" />
+        <activity android:name=".OngoPreviousComplains" />
+        <activity android:name=".PenToOngoCom" />
+        <activity android:name=".SupervisiorMain" />
         <activity android:name=".PreviousComplains" />
         <activity android:name=".ComplainActivityMain" />
         <activity android:name=".ReadQR" />

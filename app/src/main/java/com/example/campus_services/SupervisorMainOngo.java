@@ -40,42 +40,34 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class SupervisiorMain extends AppCompatActivity
+public class SupervisorMainOngo extends AppCompatActivity
 {
     private Button pencom1,ongocom1,resocom1;
     private FirebaseAuth mAuth;
-    //private String userID;
     private DatabaseReference table_user;
     private ValueEventListener listener1;
     private ListView pencomsuper;
     private DatabaseReference mDatabase;
     private ArrayList<String> pencomarrlist,mItem, availability,pencomarrlist1;
     private ArrayAdapter<String> arrayAdapter;
-    private String currusername;
-    private String curruserid;
-    private String currcomid;
+    //private FirebaseAuth mAuth1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_supervisior_main);
+        setContentView(R.layout.activity_supervisor_main_ongo);
+        mAuth = FirebaseAuth.getInstance();
         pencom1=(Button) findViewById(R.id.pen1);
         ongocom1=(Button) findViewById(R.id.ongo1);
-        pencomsuper=(ListView) findViewById(R.id.pencomsuper);
-        mAuth = FirebaseAuth.getInstance();
         resocom1=(Button) findViewById(R.id.reso1);
-        mDatabase = FirebaseDatabase.getInstance().getReference("PendingComplains");
+        //FirebaseUser user = mAuth1.getCurrentUser();
+        pencomsuper=(ListView) findViewById(R.id.pencomsuper);
+        mDatabase = FirebaseDatabase.getInstance().getReference("OngoingComplains");
         pencomarrlist=new ArrayList<>();
         pencomarrlist1=new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,pencomarrlist);
         pencomsuper.setAdapter(arrayAdapter);
-        if(mAuth.getCurrentUser() == null)
-        {
-            startActivity(new Intent(this,MainActivity.class));
-            finish();
-        }
-        FirebaseUser user = mAuth.getCurrentUser();
+
         mDatabase.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -85,7 +77,7 @@ public class SupervisiorMain extends AppCompatActivity
                 {
                     datapencom item = ds.getValue(datapencom.class);
                     //currcomid= item.getComplain_id();
-                    pencomarrlist1.add(item.getUser_name()+"\n"+item.getUser_id()+"\n"+item.getComplain_type()+"\n"+item.getComplain()+"\n"+item.getLocation()+"\n"+item.getComplain_id()+"\n"+item.getImage_URL()+"\n");
+                    pencomarrlist1.add(item.getUser_name()+"\n"+item.getUser_id()+"\n"+item.getComplain_type()+"\n"+item.getComplain()+"\n"+item.getLocation()+"\n"+item.getComplain_id()+"\n");
                     pencomarrlist.add("Student Name:-"+item.getUser_name()+"\n"+"Student ID:-"+item.getUser_id()+"\n"+"Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n"+"Complain ID:-"+item.getComplain_id()+"\n");
                 }
                 pencomsuper.setAdapter(arrayAdapter);
@@ -97,40 +89,40 @@ public class SupervisiorMain extends AppCompatActivity
 
             }
         });
-        pencom1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(SupervisiorMain.this,SupervisiorMain.class);
-                startActivity(intent);
-            }
-        });
-        ongocom1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(SupervisiorMain.this,SupervisorMainOngo.class);
-                startActivity(intent);
-            }
-        });
-        resocom1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(SupervisiorMain.this,SupervisorMainReso.class);
-                startActivity(intent);
-            }
-        });
-        pencomsuper.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+
+        pencomsuper.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent1 = new Intent(getApplicationContext(), PenToOngoCom.class);
-
+                Intent intent1 = new Intent(getApplicationContext(), OngoToResoCom.class);
                 intent1.putExtra("CurrComId",pencomarrlist1.get(position));
                 /*intent1.putExtra("CurrentDish", pencomarrlist.get(position));
                 intent1.putExtra("OrderString", OrderString);
                 intent1.putExtra("CanteenName",CanteenName);*/
                 finish();
                 startActivity(intent1);
+            }
+        });
+
+        pencom1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SupervisorMainOngo.this,SupervisiorMain.class);
+                startActivity(intent);
+            }
+        });
+        ongocom1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SupervisorMainOngo.this,SupervisorMainOngo.class);
+                startActivity(intent);
+            }
+        });
+        resocom1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SupervisorMainOngo.this,SupervisorMainReso.class);
+                startActivity(intent);
             }
         });
     }

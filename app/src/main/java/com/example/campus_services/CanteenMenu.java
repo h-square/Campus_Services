@@ -36,7 +36,8 @@ public class CanteenMenu extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canteen_menu);
 
@@ -58,7 +59,8 @@ public class CanteenMenu extends AppCompatActivity {
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Item item = ds.getValue(Item.class);
                     mItemName.add(item.getName()+ "\nPrice: " + item.getPrice());
@@ -82,8 +84,10 @@ public class CanteenMenu extends AppCompatActivity {
 
         lvCanteenMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (availability.get(position).equals("0")){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                if (availability.get(position).equals("0"))
+                {
                     Toast.makeText(getApplicationContext(),"Item is unavailable currently", Toast.LENGTH_SHORT).show();
                     return;
                 }

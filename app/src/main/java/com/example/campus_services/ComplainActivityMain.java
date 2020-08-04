@@ -30,7 +30,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import android.os.Bundle;
 import android.widget.Button;
-
 public class ComplainActivityMain extends AppCompatActivity
 {
     private Button uplo, postc, prevc, chop;
@@ -38,13 +37,14 @@ public class ComplainActivityMain extends AppCompatActivity
     private EditText comt1, com1, lo1;
     private ImageView iv;
     private datapencom obj;
-    private String user_email;
-    private long id = 0;
+    private String user_email,user_name;
+    static long id = 0;
     private FirebaseAuth mAuth;
     private StorageReference sref;
     private DatabaseReference ref;
+    private DatabaseReference table_user;
+    private ValueEventListener listener1;
     public Uri imguri;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -63,6 +63,27 @@ public class ComplainActivityMain extends AppCompatActivity
         obj = new datapencom();
         mAuth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference().child("PendingComplains");
+        user_email = mAuth.getCurrentUser().getEmail();
+        int i=0;
+        while(user_email.charAt(i) != '@')
+            i++;
+        user_email =user_email.substring(0,i);
+        final FirebaseDatabase db = FirebaseDatabase.getInstance();
+        table_user = db.getReference("Users").child("Student");
+        listener1 = table_user.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                User user = dataSnapshot.child(user_email).getValue(User.class);
+                user_name=user.getName();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         ref.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -123,8 +144,6 @@ public class ComplainActivityMain extends AppCompatActivity
         String ct = comt1.getText().toString();
         String c = com1.getText().toString();
         String l = lo1.getText().toString();
-        user_email = mAuth.getCurrentUser().getEmail();
-
         String imageid;
         imageid = System.currentTimeMillis() + "." + getExtention(imguri);
         //System.out.println(imageid);
@@ -145,8 +164,12 @@ public class ComplainActivityMain extends AppCompatActivity
             obj.setLocation(l);
             obj.setImage_URL(imageid);
             obj.setUser_id(user_email);
+            obj.setUser_name(user_name);
+            //System.out.println(user_name);
             //obj.setEmail_id("shrey");
-            ref.child(String.valueOf(id + 1)).setValue(obj);
+            String Com_id=ref.push().getKey();
+            obj.setComplain_id(Com_id);
+            ref.child(Com_id).setValue(obj);
             Toast.makeText(ComplainActivityMain.this, "Complaint has been submitted...", Toast.LENGTH_SHORT).show();
             StorageReference sref1 = sref.child(imageid);
             sref1.putFile(imguri)

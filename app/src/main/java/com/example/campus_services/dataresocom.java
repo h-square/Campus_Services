@@ -1,6 +1,6 @@
 package com.example.campus_services;
 
-public class datapencom
+public class dataresocom
 {
     private String Complain_type;
     private String Complain;
@@ -9,10 +9,6 @@ public class datapencom
     private String User_id;
     private String user_name;
     private String Complain_id;
-    public datapencom()
-    {
-
-    }
 
     public String getComplain_id() {
         return Complain_id;
@@ -68,5 +64,8 @@ public class datapencom
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
+    }
+
+    public dataresocom() {
     }
 }
