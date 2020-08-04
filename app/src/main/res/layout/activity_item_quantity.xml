@@ -50,37 +50,38 @@
                 android:textSize="32sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="90dp"
                 android:fontFamily="sans-serif-black"
                 android:text="Price"
-                android:width="90dp"
                 android:textSize="32sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:width="30dp"
                 android:fontFamily="sans-serif-black"
                 android:text=":"
-                android:width="30dp"
                 android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/tvItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
                 android:text="Price"
-                android:textSize="32sp"
-                android:fontFamily="sans-serif-black" />
+                android:textSize="32sp" />
 
         </LinearLayout>
 

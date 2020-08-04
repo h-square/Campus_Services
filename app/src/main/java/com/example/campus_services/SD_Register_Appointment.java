@@ -177,9 +177,9 @@ public class SD_Register_Appointment extends AppCompatActivity {
                     return;
                 }
                 final String slot = "Slot - " + String.valueOf(pos);
-                String tomorrow = CalendarUtils.getTomorrowsDate();
+                String date = CalendarUtils.getDate(pos);
                 long time = CalendarUtils.getCurrentTime();
-                Appointment ap = new Appointment(studentId,"Pending",tomorrow,time,pos);
+                Appointment ap = new Appointment(studentId,"Pending",date,time,pos);
                 databaseReference.child("Appointments").child(slot).child(studentId).setValue(ap);
                 Toast.makeText(SD_Register_Appointment.this,"Appointment Registered",Toast.LENGTH_LONG).show();
             }
@@ -192,8 +192,7 @@ public class SD_Register_Appointment extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Appointment ap = dataSnapshot.getValue(Appointment.class);
-                    String date = ap.getDate();
-                    if(!(CalendarUtils.isTomorrow(date))){
+                    if(CalendarUtils.isPastAppointment(ap.getDate(),ap.getSlot())){
                         String key = databaseReference.child("Appointment_History").child(studentId).push().getKey();
                         databaseReference.child("Appointment_History").child(studentId).child(key).setValue(ap);
                         databaseReference.child("Appointments").child(SLOT1).child(studentId).removeValue();

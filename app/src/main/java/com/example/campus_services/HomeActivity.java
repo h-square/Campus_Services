@@ -33,7 +33,8 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference table_user;
     private ValueEventListener listener1;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -61,9 +62,11 @@ public class HomeActivity extends AppCompatActivity {
 
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         table_user = db.getReference("Users").child("Student");
-        listener1 = table_user.addValueEventListener(new ValueEventListener() {
+        listener1 = table_user.addValueEventListener(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
                 User user = dataSnapshot.child(userID).getValue(User.class);
                 tvDisplayName.setText("Welcome: " + user.getName().toUpperCase());
                 progressDialog.dismiss();
@@ -88,6 +91,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this,SD_Register_Appointment.class));
             }
         });
+        btnComplaints.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(HomeActivity.this,ComplainActivityMain.class));
+            }
+        });
     }
 
     @Override
@@ -99,9 +110,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
 
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.menuLogout:
                 table_user.removeEventListener(listener1);
                 mAuth.signOut();

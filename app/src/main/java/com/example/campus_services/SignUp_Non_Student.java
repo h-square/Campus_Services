@@ -103,6 +103,9 @@ public class SignUp_Non_Student extends AppCompatActivity {
                             }
                             else if(Type.equals("Supervisor")){
                                 // Add supervisor object's  creation code here
+                                Supervisior supervisior= new Supervisior(name,email,phoneNumber,0);
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                databaseReference.child("Users").child("Supervisor").child(uid).setValue(supervisior);
                             }
                             else if(Type.equals("Admin")){
                                 User user = new User(name,phoneNumber,"0");

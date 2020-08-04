@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ComplainActivityMain"
+    >
+
+    <TextView
+        android:id="@+id/title-cs"
+        android:layout_width="412dp"
+        android:layout_height="72dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Complain Registration"
+        android:textColor="#070003"
+        android:textAlignment="center"
+        android:textSize="33dp" />
+
+    <Button
+        android:id="@+id/choosep"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_centerInParent="true"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/addimagebutton"
+        android:text="Choose Pic"
+        android:textAlignment="center"
+        android:textSize="17dp" />
+
+    <Button
+        android:id="@+id/postcomplaint"
+        android:layout_width="213dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Post Complain"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/previouscomplaint"
+        android:layout_width="196dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="215dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Previous Complains"
+        android:textAllCaps="false"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/ct"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="116dp"
+        android:text="Complain Type:"
+        android:textColor="#070003"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/c"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ct"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="14dp"
+        android:text="Complain:"
+        android:textColor="#070003"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="138dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/c"
+        android:layout_marginLeft="84dp"
+        android:layout_marginTop="10dp"
+        android:text="Location:"
+        android:textColor="#070003"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/compt"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="-5dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="24dp"
+        android:layout_toRightOf="@+id/ct"
+        android:background="@drawable/inputbox"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/com"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="178dp"
+        android:layout_marginEnd="36dp"
+        android:layout_toRightOf="@+id/c"
+        android:background="@drawable/inputbox"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/lo"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="-2dp"
+        android:layout_marginTop="232dp"
+        android:layout_marginEnd="22dp"
+        android:layout_toRightOf="@+id/c"
+        android:background="@drawable/inputbox"
+        android:inputType="text" />
+
+    <ImageButton
+        android:id="@+id/bb"
+        android:layout_width="wrap_content"
+        android:layout_height="74dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="322dp"
+        android:layout_marginBottom="207dp"
+        android:background="@drawable/postcomplaint"
+        android:src="@drawable/outline_arrow_back_black_18dp" />
+
+    <ImageView
+        android:id="@+id/imav"
+        android:layout_width="297dp"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="78dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="120dp" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="146dp"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_centerInParent="true"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="496dp"
+        android:background="@drawable/addimagebutton"
+        android:text="Submit"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+</RelativeLayout>

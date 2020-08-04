@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SupervisorMainOngo">
+    <Button
+        android:id="@+id/ongo1"
+        android:layout_width="141dp"
+        android:layout_height="73dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="135dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/typesofcb"
+        android:text="On Going"
+        android:textAllCaps="false"
+        android:textSize="25dp" />
+
+
+    <TextView
+        android:id="@+id/title-cs"
+        android:layout_width="412dp"
+        android:layout_height="72dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Supervisor"
+        android:textAlignment="center"
+        android:textColor="#070003"
+        android:textDirection="rtl"
+        android:textSize="39dp" />
+
+    <Button
+        android:id="@+id/pen1"
+        android:layout_width="135dp"
+        android:layout_height="73dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/typesofcb"
+        android:text="Pending"
+        android:textAllCaps="false"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/reso1"
+        android:layout_width="146dp"
+        android:layout_height="73dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="265dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/typesofcb"
+        android:text="Resolved"
+        android:textAllCaps="false"
+        android:textSize="25dp" />
+
+    <ListView
+        android:layout_width="373dp"
+        android:layout_height="376dp"
+        android:id="@+id/pencomsuper"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="178dp" />
+</RelativeLayout>

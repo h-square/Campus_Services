@@ -122,10 +122,17 @@ public class Login_Activity extends AppCompatActivity {
                                                 } else{
                                                     databaseReference.child("Users").child("Supervisor").child(uid).addValueEventListener(new ValueEventListener() {
                                                         @Override
-                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                            if(dataSnapshot.exists()){
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                                                        {
+                                                            if(dataSnapshot.exists())
+                                                            {
                                                                 // forward to supervisor's home activity
-                                                            } else{
+                                                                Intent intent = new Intent(Login_Activity.this,SupervisiorMain.class);
+                                                                finish();
+                                                                startActivity(intent);
+                                                            }
+                                                            else
+                                                                {
                                                                  databaseReference.child("Users").child("Admin").child(uid).addValueEventListener(new ValueEventListener() {
                                                                      @Override
                                                                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

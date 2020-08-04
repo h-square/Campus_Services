@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OngoPreviousComplains">
+
+    <TextView
+        android:layout_width="312dp"
+        android:layout_height="42dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="172dp"
+        android:text="Ongoing Complains:-"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/ongo"
+        android:layout_width="138dp"
+        android:layout_height="66dp"
+        android:layout_below="@+id/title-cs"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/typesofcb"
+        android:text="On Going"
+        android:textAllCaps="false"
+        android:textSize="25dp" />
+
+
+    <TextView
+        android:id="@+id/title-cs1"
+        android:layout_width="412dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Complain Registration"
+        android:textAlignment="center"
+        android:textColor="#070003"
+        android:textSize="33dp" />
+
+    <Button
+        android:id="@+id/postcomplaint1"
+        android:layout_width="213dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Post Complain"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/previouscomplaint1"
+        android:layout_width="196dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="215dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/postcomplaint"
+        android:text="Previous Complains"
+        android:textAllCaps="false"
+        android:textSize="20dp" />
+
+
+    <Button
+        android:layout_width="141dp"
+        android:layout_height="66dp"
+        android:id="@+id/pen"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/typesofcb"
+        android:text="Pending"
+        android:textAllCaps="false"
+        android:textSize="25dp" />
+
+    <Button
+        android:layout_width="141dp"
+        android:layout_height="66dp"
+        android:layout_below="@+id/title-cs"
+        android:id="@+id/reso"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/typesofcb"
+        android:text="Resolved"
+        android:textAllCaps="false"
+        android:textSize="25dp" />
+
+    <ListView
+        android:id="@+id/ongocomlistview"
+        android:layout_width="375dp"
+        android:layout_height="260dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="247dp" />
+</RelativeLayout>
