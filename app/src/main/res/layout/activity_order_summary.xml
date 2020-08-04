@@ -37,29 +37,29 @@
 
         </ListView>
     </LinearLayout>
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="42dp">
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cooking   :\nInstruction"
-            android:textSize="18sp"
-            android:layout_marginLeft="16dp"
-            android:fontFamily="sans-serif-condensed-medium"/>
-        <TextView
-            android:id="@+id/tvOrderSummaryCookingInstruction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Add Cooking Instruction"
-            android:layout_gravity="center_vertical"
-            android:textSize="16sp"
-            android:layout_marginLeft="16dp"/>
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginBottom="42dp">-->
+<!--        <TextView-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Cooking   :\nInstruction"-->
+<!--            android:textSize="18sp"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/tvOrderSummaryCookingInstruction"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Add Cooking Instruction"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:textSize="16sp"-->
+<!--            android:layout_marginLeft="16dp"/>-->
+<!--    </LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

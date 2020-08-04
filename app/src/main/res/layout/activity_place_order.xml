@@ -48,12 +48,21 @@
             android:id="@+id/lvPlaceOrderList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp">
+            android:layout_marginBottom="10dp">
 
         </ListView>
+
+<!--        <ListView-->
+<!--            android:id="@+id/lvCookingInstr"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_marginLeft="10dp">-->
+
+<!--        </ListView>-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,31 +72,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cooking   :\nInstruction"
-                android:textSize="18sp"
-                android:layout_marginLeft="16dp"
-                android:fontFamily="sans-serif-condensed-medium"/>
 
-            <EditText
-                android:id="@+id/etAddCookingInstruction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="20dp"
-                android:hint="i.e. add onion"
-                android:textSize="16sp" />
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

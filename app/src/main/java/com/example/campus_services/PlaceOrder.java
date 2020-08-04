@@ -31,21 +31,24 @@ import java.util.Date;
 
 public class PlaceOrder extends AppCompatActivity implements View.OnClickListener{
 
-    private String CanteenName,OrderString,customerId,canteenID, userID, user;
+    private String CanteenName,OrderString,customerId,canteenID, userID, user, InstructionString;
     private Button PlaceOrderB,changePaymentMethod;
     private TextView amt,currentBalance,paymentMethod;
-    private EditText CookingInstruction;
+    private ListView CookingInstruction;
     private ListView disp;
     private int amount=0;
     private int flag=0;
     private Order OrderNew;
-    private ArrayList<String> mItemName;
-    private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<String> mItemName,mI;
+    private ArrayAdapter<String> arrayAdapter,mAdapter;
     private String availableBalance, currentPaymentMethod = "0";
 
     private ValueEventListener newlistner;
     private DatabaseReference db4;
     private FirebaseAuth mAuth,firebaseAuth;
+
+    private ArrayList<String> instr;
+    private ArrayList<ArrayList<String>> instructions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +62,11 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
         }
         customerId = mAuth.getCurrentUser().getEmail();
 
-        Intent intent  = getIntent();
+        final Intent intent  = getIntent();
         CanteenName = intent.getStringExtra("CanteenName");
         OrderString = intent.getStringExtra("OrderString");
+        InstructionString = intent.getStringExtra("InstructionString");
+        instr = intent.getStringArrayListExtra("CookI");
 
         FirebaseDatabase fbd = FirebaseDatabase.getInstance();
         fbd.getReference("Users/Canteen").addValueEventListener(new ValueEventListener() {
@@ -88,9 +93,13 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
         currentBalance = findViewById(R.id.tvPlaceOrderCurrentBalance);
         paymentMethod = findViewById(R.id.tvPaymentType);
         disp = findViewById(R.id.lvPlaceOrderList);
-        CookingInstruction = findViewById(R.id.etAddCookingInstruction);
+        //CookingInstruction = findViewById(R.id.lvCookingInstr);
         mItemName= new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,instr);
+
+        mI= new ArrayList<>();
+        mAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mI);
+        instructions = new ArrayList<ArrayList<String>>();
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if(userID.charAt(0)>='0' && userID.charAt(0)<='9'){
@@ -133,6 +142,8 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
             Intent intent1 = new Intent(getApplicationContext(), CanteenMenu.class);
             intent1.putExtra("OrderString", OrderString);
             intent1.putExtra("CanteenName",CanteenName);
+            intent1.putExtra("InstructionString",InstructionString);
+            intent1.putExtra("CookI",instr);
             finish();
             startActivity(intent1);
         }
@@ -183,6 +194,42 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
                 amount += Integer.parseInt(amou) * Integer.parseInt(quty);
             }
 
+            c = 0;pre = 0;
+            temp = "";
+
+            for (int i = 0; i < InstructionString.length(); i++) {
+                if (InstructionString.charAt(i) == '\n') {
+                    c++;
+                    if (c % 3 == 2) {
+                        temp = InstructionString.substring(pre, i);
+                        pre = i + 1;
+                    } else if (c % 3 == 0) {
+                        temp = temp + InstructionString.substring(pre, i);
+                        pre = i + 1;
+                        mI.add(temp);
+                    }
+                }
+            }
+            temp += InstructionString.substring(pre, InstructionString.length());
+            mI.add(temp);
+            //CookingInstruction.setAdapter(mAdapter);
+
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
+            db.getReference("CanteenMenu/" + CanteenName).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                        Item item = ds.getValue(Item.class);
+                        instructions.add(item.getInstructions());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
             disp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -202,6 +249,9 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
                     intent1.putExtra("CurrentDish", temp);
                     intent1.putExtra("OrderString", OrderString);
                     intent1.putExtra("CanteenName", CanteenName);
+                    intent1.putExtra("InstructionString", InstructionString);
+                    intent1.putExtra("CookingInstructions",instructions.get(position));
+                    intent1.putExtra("CookI",instr);
                     finish();
                     startActivity(intent1);
                 }
@@ -220,6 +270,8 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
         Intent intent1 = new Intent(getApplicationContext(), CanteenMenu.class);
         intent1.putExtra("OrderString", OrderString);
         intent1.putExtra("CanteenName",CanteenName);
+        intent1.putExtra("InstructionString",InstructionString);
+        intent1.putExtra("CookI",instr);
         finish();
         startActivity(intent1);
 
@@ -253,7 +305,7 @@ public class PlaceOrder extends AppCompatActivity implements View.OnClickListene
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     String orderNo1 = dataSnapshot.getValue(String.class);
-                    OrderNew = new Order(orderNo1, customerId, CanteenName, OrderString, currentDateandTime.toString(), CookingInstruction.getText().toString(), currentPaymentMethod);
+                    OrderNew = new Order(orderNo1, customerId, CanteenName, OrderString, currentDateandTime.toString(), instr, currentPaymentMethod,"Cooking");
                     final FirebaseDatabase database1 = FirebaseDatabase.getInstance();
                     final DatabaseReference table_order = database1.getReference("CurrentOrders");
                     table_order.child(OrderNew.getOrderNo()).setValue(OrderNew);

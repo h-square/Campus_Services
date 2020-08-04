@@ -37,10 +37,11 @@ public class ProfessorCurrentOrdersFragment extends Fragment {
 
     private TextView PendingOrderNumber, StatusType;
     private ListView listView;
-    private ArrayList<String> mItemName, OrderDetails,saveOrderNumber, CookingInstruction, paymentMethod, OrderNo, Customers;
+    private ArrayList<String> mItemName, OrderDetails,saveOrderNumber, CookingInstruction, paymentMethod, OrderNo, Customers, OrderStatus;
     private ArrayAdapter<String> arrayAdapter;
     private String CanteenName, OperationType,table_name,CanteenAvailable;
     private int count=0;
+    private ArrayList<ArrayList<String>> all;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +64,8 @@ public class ProfessorCurrentOrdersFragment extends Fragment {
         saveOrderNumber = new ArrayList<>();
         OrderDetails= new ArrayList<>();
         paymentMethod = new ArrayList<>();
+        OrderStatus = new ArrayList<>();
+        all = new ArrayList<ArrayList<String>>();
         arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.dish_info,R.id.dishnameid,mItemName);
         PendingOrderNumber.setText(Integer.toString(count));
 
@@ -78,13 +81,15 @@ public class ProfessorCurrentOrdersFragment extends Fragment {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Order order = ds.getValue(Order.class);
                     if(order.getCustomerId().charAt(0)<'0' || order.getCustomerId().charAt(0)>'9') {
-                        mItemName.add("Order No: " + order.getOrderNo() + "\nCustomerID: " + order.getCustomerId());
+                        mItemName.add("Order No: " + order.getOrderNo() + "\n" + order.getCustomerId());
                         OrderNo.add(order.getOrderNo());
                         Customers.add(order.getCustomerId());
                         OrderDetails.add(order.getOrderDetails());
                         saveOrderNumber.add(order.getOrderNo());
-                        CookingInstruction.add(order.getCookingInstruction());
+                        CookingInstruction.add(order.getOrderDetails());
                         paymentMethod.add(order.getPaymentMethod());
+                        all.add(order.getCookingInstruction());
+                        OrderStatus.add(order.getStatus());
                         count += 1;
                         PendingOrderNumber.setText(Integer.toString(count));
                     }
@@ -116,6 +121,8 @@ public class ProfessorCurrentOrdersFragment extends Fragment {
                 intent.putExtra("CookingInstruction",CookingInstruction.get(position));
                 intent.putExtra("CanteenAvailable", CanteenAvailable);
                 intent.putExtra("PaymentMethod",paymentMethod.get(position));
+                intent.putExtra("OrderStatus",OrderStatus.get(position));
+                intent.putExtra("CookingInstructions",all.get(position));
                 getActivity().finish();
                 startActivity(intent);
             }

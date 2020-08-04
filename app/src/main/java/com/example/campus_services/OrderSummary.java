@@ -21,7 +21,7 @@ public class OrderSummary extends AppCompatActivity {
     private TextView OrderBasic, TotalAmount, displayCookingInstruction, displayPaymentMethod;
     private Button back, generateQR;
     private ListView listView;
-    private ArrayList<String> mItemName;
+    private ArrayList<String> mItemName,instr;
     private ArrayAdapter<String> arrayAdapter;
     private String orderBasics, orderDetails,StatusType, CookingInstruction, PaymentMethod;
     private int amount=0;
@@ -37,16 +37,17 @@ public class OrderSummary extends AppCompatActivity {
         StatusType = intent.getStringExtra("OperationType");
         CookingInstruction = intent.getStringExtra("CookingInstruction");
         PaymentMethod = intent.getStringExtra("PaymentMethod");
+        instr = intent.getStringArrayListExtra("CookingInstructions");
 
         OrderBasic = findViewById(R.id.tvOrderSummaryText);
         TotalAmount = findViewById(R.id.tvOrderDetailsTotalAmount);
         displayPaymentMethod = findViewById(R.id.tvDisplayPaymentMethod);
         generateQR = findViewById(R.id.GenerateQr);
-        displayCookingInstruction = findViewById(R.id.tvOrderSummaryCookingInstruction);
+        //displayCookingInstruction = findViewById(R.id.tvOrderSummaryCookingInstruction);
         listView = findViewById(R.id.lvOrderSummary);
-        displayCookingInstruction.setText(CookingInstruction);
+        //displayCookingInstruction.setText(CookingInstruction);
         mItemName= new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,instr);
 
         if (StatusType.equals("OrderStatus")){
             if (PaymentMethod.equals("1")){

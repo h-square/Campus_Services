@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class OrderStatus extends AppCompatActivity {
@@ -31,6 +32,7 @@ public class OrderStatus extends AppCompatActivity {
     private String customerId;
     private int count=0;
     private String StatusType,table_name;
+    private ArrayList<ArrayList<String>> instr;
 
     private FirebaseAuth firebaseAuth;
 
@@ -49,6 +51,7 @@ public class OrderStatus extends AppCompatActivity {
         paymentMethod = new ArrayList<>();
         OrderDetails= new ArrayList<>();
         CookingInstruction = new ArrayList<>();
+        instr = new ArrayList<ArrayList<String>>();
 
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
         if (StatusType.equals("OrderHistory")){
@@ -79,12 +82,18 @@ public class OrderStatus extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Order order = ds.getValue(Order.class);
-                    mItemName.add("Order No: " + order.getOrderNo() + "\nCanteen: " + order.getCanteenName());
+                    if(StatusType.equals("OrderHistory")){
+                        mItemName.add("Order No: " + order.getOrderNo() + "\nCanteen: " + order.getCanteenName());
+                    }
+                    else {
+                        mItemName.add("Order No: " + order.getOrderNo() + "\nCanteen: " + order.getCanteenName() + "\nStatus: " + order.getStatus());
+                    }
                     OrderDetails.add(order.getOrderDetails());
-                    CookingInstruction.add(order.getCookingInstruction());
+                    CookingInstruction.add(order.getOrderDetails());
                     paymentMethod.add(order.getPaymentMethod());
                     count+=1;
                     PendingOrderNumber.setText(Integer.toString(count));
+                    instr.add(order.getCookingInstruction());
                 }
                 listView.setAdapter(arrayAdapter);
                 query.removeEventListener(this);
@@ -105,6 +114,7 @@ public class OrderStatus extends AppCompatActivity {
                 intent.putExtra("OperationType", StatusType);
                 intent.putExtra("CookingInstruction",CookingInstruction.get(position));
                 intent.putExtra("PaymentMethod", paymentMethod.get(position));
+                intent.putExtra("CookingInstructions", instr.get(position));
                 finish();
                 startActivity(intent);
             }

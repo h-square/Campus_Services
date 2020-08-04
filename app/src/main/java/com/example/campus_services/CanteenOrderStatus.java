@@ -27,6 +27,7 @@ public class CanteenOrderStatus extends AppCompatActivity {
     private ListView listView;
     private ArrayList<String> mItemName, OrderDetails,saveOrderNumber, CookingInstruction, paymentMethod, OrderNo, Customers;
     private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<ArrayList<String>> instr;
     private String CanteenName, OperationType,table_name,CanteenAvailable;
     private int count=0;
 
@@ -50,6 +51,7 @@ public class CanteenOrderStatus extends AppCompatActivity {
         saveOrderNumber = new ArrayList<>();
         OrderDetails= new ArrayList<>();
         paymentMethod = new ArrayList<>();
+        instr = new ArrayList<ArrayList<String>>();
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
         PendingOrderNumber.setText(Integer.toString(count));
 
@@ -72,13 +74,14 @@ public class CanteenOrderStatus extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Order order = ds.getValue(Order.class);
-                    mItemName.add("Order No: " + order.getOrderNo() + "\nCustomerID: " + order.getCustomerId());
+                    mItemName.add("Order No: " + order.getOrderNo() + "\n" + order.getCustomerId());
                     OrderNo.add(order.getOrderNo());
                     Customers.add(order.getCustomerId());
                     OrderDetails.add(order.getOrderDetails());
                     saveOrderNumber.add(order.getOrderNo());
-                    CookingInstruction.add(order.getCookingInstruction());
+                    CookingInstruction.add(order.getOrderDetails());
                     paymentMethod.add(order.getPaymentMethod());
+                    instr.add(order.getCookingInstruction());
                     count+=1;
                     PendingOrderNumber.setText(Integer.toString(count));
                 }
@@ -106,6 +109,7 @@ public class CanteenOrderStatus extends AppCompatActivity {
                 intent.putExtra("CookingInstruction",CookingInstruction.get(position));
                 intent.putExtra("CanteenAvailable", CanteenAvailable);
                 intent.putExtra("PaymentMethod",paymentMethod.get(position));
+                intent.putExtra("CookingInstructions",instr.get(position));
                 CanteenOrderStatus.this.finish();
                 startActivity(intent);
             }

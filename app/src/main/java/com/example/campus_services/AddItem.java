@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class AddItem extends AppCompatActivity {
 
     private String CanteenName, CanteenAvailability;
@@ -19,6 +21,7 @@ public class AddItem extends AppCompatActivity {
     private EditText DName;
     private EditText DPrice;
     private Button Submit;
+    private ArrayList<String> Instructions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class AddItem extends AppCompatActivity {
         DPrice = findViewById(R.id.etItemPrice);
         Submit = findViewById(R.id.btnSubmitItem);
 
+        Instructions = new ArrayList<>();
+        Instructions.add("None");
+
         Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +50,7 @@ public class AddItem extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Enter Price",Toast.LENGTH_SHORT);
                     return;
                 }
-                dish = new Item(DName.getText().toString(),DPrice.getText().toString(),"1");
+                dish = new Item(DName.getText().toString(),DPrice.getText().toString(),"1",Instructions);
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final DatabaseReference table_items = database.getReference("CanteenMenu/" + CanteenName);
                 table_items.child(DName.getText().toString()).setValue(dish);
@@ -64,7 +70,7 @@ public class AddItem extends AppCompatActivity {
 
         Intent intent = new Intent(this, CanteenManager.class);
         intent.putExtra("CanteenName",CanteenName);
-        intent.putExtra("CanteenAvailability", CanteenAvailability);
+        intent.putExtra("CanteenAvailable", CanteenAvailability);
         finish();
         startActivity(intent);
 

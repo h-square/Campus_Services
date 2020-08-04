@@ -96,7 +96,7 @@ public class ReadQR extends AppCompatActivity implements ZXingScannerView.Result
                     orderNo = order.getOrderNo();
                     orderName = order.getCustomerId();
                     orderDetails = order.getOrderDetails();
-                    cookingInstruction = order.getCookingInstruction();
+                    cookingInstruction = order.getOrderDetails();
                     paymentMethod = order.getPaymentMethod();
                     Intent intent = new Intent(ReadQR.this,CanteenOrderDeliver.class);
                     intent.putExtra("CanteenName",CanteenName);

@@ -50,7 +50,7 @@ public class MenuFragment extends Fragment {
     private ValueEventListener listener;
     private ArrayList<String> mItem, availability, mItemName;
     private ArrayAdapter<String> arrayAdapter;
-
+    private ArrayList<ArrayList<String>> Instructions_set;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,11 +72,12 @@ public class MenuFragment extends Fragment {
         btnChangeAvailability = rootView.findViewById(R.id.btnChangeAvailability);
 
         tvDisplayCanteenName.setText(CanteenName);
-        tvCanteenAvailability.setText(CanteenAvailability);
-
-        lvCanteenItems.addHeaderView(new View(getActivity().getApplicationContext()));
-        lvCanteenItems.addFooterView(new View(getActivity().getApplicationContext()));
-
+        if(CanteenAvailability.equals("1")) {
+            tvCanteenAvailability.setText("Available");
+        }
+        else{
+            tvCanteenAvailability.setText("Unavailable");
+        }
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         table_user = db.getReference("Users/Canteen");
         listener = table_user.addValueEventListener(new ValueEventListener() {
@@ -96,6 +97,7 @@ public class MenuFragment extends Fragment {
         mItem = new ArrayList<>();
         mItemName = new ArrayList<>();
         availability = new ArrayList<>();
+        Instructions_set = new ArrayList<ArrayList<String>>();
         arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.dish_info,R.id.dishnameid,mItem);
         lvCanteenItems.setAdapter(arrayAdapter);
 
@@ -112,6 +114,7 @@ public class MenuFragment extends Fragment {
                         mItem.add(item.getName() + "\nPrice: " + item.getPrice() + "\nUnavailable");
                     }
                     availability.add(item.getAvailability());
+                    Instructions_set.add(item.getInstructions());
                 }
                 lvCanteenItems.setAdapter(arrayAdapter);
                 mDatabase.removeEventListener(this);
@@ -132,6 +135,7 @@ public class MenuFragment extends Fragment {
                 intent1.putExtra("CanteenName",CanteenName);
                 intent1.putExtra("Availability",availability.get(position));
                 intent1.putExtra("CanteenAvailable", CanteenAvailability);
+                intent1.putExtra("CookingInstructions",Instructions_set.get(position));
                 getActivity().finish();
                 startActivity(intent1);
             }

@@ -29,11 +29,12 @@ public class CanteenMenu extends AppCompatActivity {
     private TextView tvDisplayCanteenName;
     private Button btnPlaceOrder;
     private ListView lvCanteenMenu;
-    private String CanteenName,OrderString;
+    private String CanteenName, OrderString, InstructionString;
 
     private DatabaseReference mDatabase;
-    private ArrayList<String> mItemName,mItem, availability;
+    private ArrayList<String> mItemName,mItem, availability,instr;
     private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<ArrayList<String>> instructions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,18 @@ public class CanteenMenu extends AppCompatActivity {
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         lvCanteenMenu = findViewById(R.id.lvCanteenMenu);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         tvDisplayCanteenName.setText(intent.getStringExtra("CanteenName"));
         CanteenName = intent.getStringExtra("CanteenName");
         OrderString = intent.getStringExtra("OrderString");
+        InstructionString = intent.getStringExtra("InstructionString");
+        instr = intent.getStringArrayListExtra("CookI");
 
         mDatabase = FirebaseDatabase.getInstance().getReference("CanteenMenu/"+CanteenName);
         mItemName = new ArrayList<>();
         mItem = new ArrayList<>();
         availability = new ArrayList<>();
+        instructions = new ArrayList<ArrayList<String>>();
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItem);
         lvCanteenMenu.setAdapter(arrayAdapter);
 
@@ -69,6 +73,7 @@ public class CanteenMenu extends AppCompatActivity {
                     else {
                         mItem.add(item.getName()+ "\nPrice: " + item.getPrice() + "\nUnavailable");
                     }
+                    instructions.add(item.getInstructions());
                 }
                 lvCanteenMenu.setAdapter(arrayAdapter);
                 mDatabase.removeEventListener(this);
@@ -92,6 +97,9 @@ public class CanteenMenu extends AppCompatActivity {
                 intent1.putExtra("CurrentDish", mItemName.get(position));
                 intent1.putExtra("OrderString", OrderString);
                 intent1.putExtra("CanteenName",CanteenName);
+                intent1.putExtra("CookingInstructions",instructions.get(position));
+                intent1.putExtra("InstructionString",InstructionString);
+                intent1.putExtra("CookI",instr);
                 finish();
                 startActivity(intent1);
             }
@@ -107,6 +115,8 @@ public class CanteenMenu extends AppCompatActivity {
                 Intent intent1 = new Intent(getApplicationContext(), PlaceOrder.class);
                 intent1.putExtra("CanteenName",CanteenName);
                 intent1.putExtra("OrderString", OrderString);
+                intent1.putExtra("InstructionString",InstructionString);
+                intent1.putExtra("CookI",instr);
                 finish();
                 startActivity(intent1);
             }
@@ -136,6 +146,8 @@ public class CanteenMenu extends AppCompatActivity {
                 Intent intent1 = new Intent(getApplicationContext(), ContactFeedback.class);
                 intent1.putExtra("OrderString", OrderString);
                 intent1.putExtra("CanteenName",CanteenName);
+                intent1.putExtra("InstructionString",InstructionString);
+                intent1.putExtra("CookI",instr);
                 finish();
                 startActivity(intent1);
                 return true;

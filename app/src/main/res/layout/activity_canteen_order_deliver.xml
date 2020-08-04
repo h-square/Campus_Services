@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
@@ -57,27 +57,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="140dp"
-                android:fontFamily="sans-serif-black"
-                android:text="CustomerID"
-                android:textSize="22sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="20dp"
-                android:fontFamily="sans-serif-black"
-                android:text=":"
-                android:textSize="22sp" />
-
-            <TextView
                 android:id="@+id/tvOrderDeliverID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
-                android:fontFamily="sans-serif-black"
                 android:text="ID"
                 android:textSize="20sp" />
 
@@ -105,32 +88,33 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cooking   :\nInstruction"
-                android:textSize="18sp"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="sans-serif-condensed-medium"/>
-            <TextView
-                android:id="@+id/OrderDeliveryCookingInstruction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Add Cooking Instruction"
-                android:layout_gravity="center_vertical"
-                android:textSize="16sp"
-                android:inputType="textMultiLine"
-                android:layout_marginLeft="16dp"/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="10dp">-->
+<!--            <TextView-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Cooking   :\nInstruction"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:fontFamily="sans-serif-condensed-medium"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/OrderDeliveryCookingInstruction"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Add Cooking Instruction"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:textSize="16sp"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:layout_marginLeft="16dp"/>-->
+<!--        </LinearLayout>-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

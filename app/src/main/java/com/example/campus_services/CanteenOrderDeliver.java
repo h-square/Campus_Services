@@ -3,7 +3,9 @@ package com.example.campus_services;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,21 +24,22 @@ import java.util.ArrayList;
 
 public class CanteenOrderDeliver extends AppCompatActivity {
 
-    private TextView OrderDetailsNo, OrderDetailsName, TotalAmount, displayCookingInstruction, displayPaymentMethod;
+    private TextView OrderDetailsNo, OrderDetailsName, TotalAmount, displayPaymentMethod;
     private Button deliverOrder;
     private ListView listView;
-    private ArrayList<String> mItemName;
+    private ArrayList<String> mItemName,instr;
     private ArrayAdapter<String> arrayAdapter;
-    private String orderBasics, orderNo, orderName, orderDetails, CanteenName, OrderNumber,OperationType,CanteenAvailable, CookingInstruction, PaymentMethod;
+    private String orderBasics, orderNo, orderName, orderDetails, CanteenName, OrderNumber,OperationType,CanteenAvailable, CookingInstruction, PaymentMethod, OrderStatus;
     private Order order;
     int flag=0, amount=0;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canteen_order_deliver);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         orderBasics = intent.getStringExtra("OrderBasic");
         orderNo = intent.getStringExtra("OrderNo");
         orderName = intent.getStringExtra("CustomerID");
@@ -47,17 +50,18 @@ public class CanteenOrderDeliver extends AppCompatActivity {
         CanteenAvailable = intent.getStringExtra("CanteenAvailable");
         CookingInstruction = intent.getStringExtra("CookingInstruction");
         PaymentMethod = intent.getStringExtra("PaymentMethod");
+        instr = intent.getStringArrayListExtra("CookingInstructions");
 
         OrderDetailsNo = (TextView) findViewById(R.id.tvOrderDeliverNo);
         OrderDetailsName = findViewById(R.id.tvOrderDeliverID);
         TotalAmount = (TextView)findViewById(R.id.OrderDeliverDetailsTotalAmount);
-        displayCookingInstruction = (TextView) findViewById(R.id.OrderDeliveryCookingInstruction);
+        //displayCookingInstruction = (TextView) findViewById(R.id.OrderDeliveryCookingInstruction);
         displayPaymentMethod = (TextView) findViewById(R.id.canteenDisplayPaymentMethod);
         deliverOrder = (Button) findViewById(R.id.DeliverOrder);
         listView = (ListView) findViewById(R.id.lvOrderDeliver);
-        displayCookingInstruction.setText(CookingInstruction);
+        //displayCookingInstruction.setText(CookingInstruction);
         mItemName= new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,mItemName);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info,R.id.dishnameid,instr);
 
         if (OperationType.equals("OrderStatus")){
             if (PaymentMethod.equals("1")){
@@ -76,6 +80,13 @@ public class CanteenOrderDeliver extends AppCompatActivity {
             }
         }
 
+        if(orderName.charAt(0)>='0' && orderName.charAt(0)<='9') {
+            type = 1;
+        }
+        else{
+            type = 2;
+        }
+
         int c=0,pre=0;
         String temp="";
         OrderDetailsNo.setText(orderNo);
@@ -87,6 +98,7 @@ public class CanteenOrderDeliver extends AppCompatActivity {
         else {
             deliverOrder.setEnabled(true);
             deliverOrder.setVisibility(View.VISIBLE);
+            OrderStatus = intent.getStringExtra("OrderStatus");
         }
         for(int i=0;i<orderDetails.length();i++){
             if (orderDetails.charAt(i)=='\n'){
@@ -134,46 +146,97 @@ public class CanteenOrderDeliver extends AppCompatActivity {
         }
         TotalAmount.setText(Integer.toString(amount));
 
-        deliverOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final FirebaseDatabase db1 = FirebaseDatabase.getInstance();
-                final DatabaseReference table_CurrentOrder = db1.getReference("CurrentOrders");
-                table_CurrentOrder.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(flag==0) {
-                            order = dataSnapshot.child(OrderNumber).getValue(Order.class);
-                            flag = 1;
-                            final DatabaseReference table_DeliveredOrder = db1.getReference("DeliveredOrders");
-                            table_DeliveredOrder.child(OrderNumber).setValue(order);
-                            final DatabaseReference table_tem = db1.getReference("CurrentOrders");
-                            table_tem.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    dataSnapshot.child(OrderNumber).getRef().removeValue();
-                                    Intent intent = new Intent(CanteenOrderDeliver.this, CanteenManager.class);
-                                    intent.putExtra("CanteenName",CanteenName);
-                                    intent.putExtra("CanteenAvailable", CanteenAvailable);
-                                    finish();
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
+        if(!OperationType.equals("OrderHistory") &&  OrderStatus.equals("Cooking")){
+            deliverOrder.setText("Ready");
+            deliverOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final FirebaseDatabase db1 = FirebaseDatabase.getInstance();
+                    final DatabaseReference table_CurrentOrder = db1.getReference("CurrentOrders");
+                    table_CurrentOrder.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (flag == 0) {
+                                order = dataSnapshot.child(OrderNumber).getValue(Order.class);
+                                flag = 1;
+                                order.setStatus("Ready");
+                                table_CurrentOrder.child(OrderNumber).setValue(order);
+                                OrderStatus="Ready";
+                                Intent it=new Intent(getApplicationContext(),CanteenOrderDeliver.class);
+                                it.putExtra("CanteenName",CanteenName);
+                                it.putExtra("OrderBasic", orderBasics);
+                                it.putExtra("OrderNo",orderNo);
+                                it.putExtra("CustomerID",orderName);
+                                it.putExtra("OrderDetails",orderDetails);
+                                it.putExtra("OrderNumber",OrderNumber);
+                                it.putExtra("OperationType",OperationType);
+                                it.putExtra("CookingInstruction",CookingInstruction);
+                                it.putExtra("CanteenAvailable", CanteenAvailable);
+                                it.putExtra("PaymentMethod",PaymentMethod);
+                                it.putExtra("OrderStatus",OrderStatus);
+                                it.putExtra("CookingInstructions",instr);
+                                finish();
+                                overridePendingTransition(0, 0);
+                                startActivity(it);
+                                overridePendingTransition(0, 0);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            deliverOrder.setText("Deliver");
+            deliverOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final FirebaseDatabase db1 = FirebaseDatabase.getInstance();
+                    final DatabaseReference table_CurrentOrder = db1.getReference("CurrentOrders");
+                    table_CurrentOrder.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(flag==0) {
+                                order = dataSnapshot.child(OrderNumber).getValue(Order.class);
+                                flag = 1;
+                                order.setStatus("Delivered");
+                                SharedPreferences.Editor editor = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE).edit();
+                                editor.putInt("position",type);
+                                editor.apply();
+                                final DatabaseReference table_DeliveredOrder = db1.getReference("DeliveredOrders");
+                                table_DeliveredOrder.child(OrderNumber).setValue(order);
+                                final DatabaseReference table_tem = db1.getReference("CurrentOrders");
+                                table_tem.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        dataSnapshot.child(OrderNumber).getRef().removeValue();
+                                        Intent intent = new Intent(CanteenOrderDeliver.this, CanteenManager.class);
+                                        intent.putExtra("CanteenName",CanteenName);
+                                        intent.putExtra("CanteenAvailable", CanteenAvailable);
+                                        finish();
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @Override
@@ -188,6 +251,9 @@ public class CanteenOrderDeliver extends AppCompatActivity {
             startActivity(intent);
         }
         else{
+            SharedPreferences.Editor editor = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE).edit();
+            editor.putInt("position",type);
+            editor.apply();
             Intent intent = new Intent(CanteenOrderDeliver.this,CanteenManager.class);
             intent.putExtra("CanteenName",CanteenName);
             intent.putExtra("CanteenAvailable",CanteenAvailable);

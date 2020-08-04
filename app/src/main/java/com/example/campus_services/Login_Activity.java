@@ -76,20 +76,20 @@ public class Login_Activity extends AppCompatActivity {
                             final String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                             final String student_id = email.substring(0,9);
 
-                            if(!(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())){
-                                FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Toast.makeText(Login_Activity.this,"Email verification link is sent",Toast.LENGTH_LONG).show();
-                                            FirebaseAuth.getInstance().signOut();
-                                        } else{
-                                            Toast.makeText(Login_Activity.this,"Error!!!" + task.getException().toString(),Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-                                return;
-                            }
+//                            if(!(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())){
+//                                FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if(task.isSuccessful()){
+//                                            Toast.makeText(Login_Activity.this,"Email verification link is sent",Toast.LENGTH_LONG).show();
+//                                            FirebaseAuth.getInstance().signOut();
+//                                        } else{
+//                                            Toast.makeText(Login_Activity.this,"Error!!!" + task.getException().toString(),Toast.LENGTH_LONG).show();
+//                                        }
+//                                    }
+//                                });
+//                                return;
+//                            }
 
                             databaseReference.child("Users").child("Canteen").child(uid).addValueEventListener(new ValueEventListener() {
                                 @Override

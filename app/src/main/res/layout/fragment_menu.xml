@@ -26,31 +26,26 @@
             android:layout_gravity="center_vertical">
 
             <TextView
+                android:id="@+id/tvCanteenAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="Availability  :  "
-                android:textSize="24sp" />
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:id="@+id/tvCanteenAvailability"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Unavailable"
-                android:textSize="24sp"/>
+                android:textSize="24sp" />
+            
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/btnChangeAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Change"
-                 />
+                android:layout_marginRight="16dp"
+                android:text="Change" />
 
         </LinearLayout>
 

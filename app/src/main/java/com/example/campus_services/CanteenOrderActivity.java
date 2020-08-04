@@ -36,6 +36,7 @@ public class CanteenOrderActivity extends AppCompatActivity {
 
     private DatabaseReference table_user;
     private ValueEventListener listener;
+    private ArrayList<String> instr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,8 @@ public class CanteenOrderActivity extends AppCompatActivity {
         tvBalance = findViewById(R.id.tvBalance);
         CanteenList = findViewById(R.id.CanteenList);
         userID = mAuth.getCurrentUser().getEmail();
+
+        instr = new ArrayList<>();
         if(userID.charAt(0)>='0' && userID.charAt(0)<='9'){
             user="Student";
         }
@@ -108,6 +111,8 @@ public class CanteenOrderActivity extends AppCompatActivity {
                     //intent.putExtra("CanteenNumber",Integer.toString(position+1));
                     intent.putExtra("CanteenName",canteens.get(position).substring(0,canteens.get(position).length() - 10));
                     intent.putExtra("OrderString","");
+                    intent.putExtra("InstructionString","");
+                    intent.putExtra("CookI",instr);
                     finish();
                     startActivity(intent);
                 }
