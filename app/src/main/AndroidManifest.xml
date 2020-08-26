@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SupervisorMainReso"></activity>
+        <activity android:name=".OngoComStudents"></activity>
+        <activity android:name=".SupervisorMainReso" />
         <activity android:name=".SupervisorMainOngo" />
         <activity android:name=".OngoToResoCom" />
         <activity android:name=".ResoPreviousComplains" />

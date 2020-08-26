@@ -98,6 +98,15 @@ public class ResoPreviousComplains extends AppCompatActivity
             }
         });
     }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),ComplainActivityMain.class);
+        finish();
+        startActivity(intent);
+    }
+
     private void getResolvedComplainsList()
     {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

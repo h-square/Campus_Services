@@ -9,6 +9,17 @@ public class dataongocom
     private String User_id;
     private String user_name;
     private String Complain_id;
+    private String Worker_name;
+    private String Worker_number;
+    private String Status_by_student;
+
+    public String getStatus_by_student() {
+        return Status_by_student;
+    }
+
+    public void setStatus_by_student(String status_by_student) {
+        Status_by_student = status_by_student;
+    }
 
     public String getComplain_id() {
         return Complain_id;
@@ -60,6 +71,22 @@ public class dataongocom
 
     public String getUser_name() {
         return user_name;
+    }
+
+    public String getWorker_name() {
+        return Worker_name;
+    }
+
+    public void setWorker_name(String worker_name) {
+        Worker_name = worker_name;
+    }
+
+    public String getWorker_number() {
+        return Worker_number;
+    }
+
+    public void setWorker_number(String worker_number) {
+        Worker_number = worker_number;
     }
 
     public void setUser_name(String user_name) {

@@ -3,7 +3,20 @@
 
     <string name="pref_show_true">Shown</string>
     <string name="pref_show_false">Hidden</string>
-
+    <string-array name="comtype">
+        <item>
+            Electricity
+        </item>
+        <item>
+            Plumbing
+        </item>
+        <item>
+            Cleaning
+        </item>
+        <item>
+            Carpentry
+        </item>
+    </string-array>
     <string name="pref_ban_title">Banned Users</string>
     <string name="pref_ban_key">isBannedUserListShown</string>
 

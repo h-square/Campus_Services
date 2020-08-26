@@ -58,6 +58,7 @@ public class PenToOngoCom extends AppCompatActivity
     private ImageView imageView;
     private FirebaseStorage fbstorage;
     private StorageReference storageRef;
+    private EditText worname,worcontact;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,6 +68,8 @@ public class PenToOngoCom extends AppCompatActivity
         CurrComId = intent.getStringExtra("CurrComId");
         btnbackPenToOngo=(ImageButton) findViewById(R.id.btnbackPenToOngo);
         btnPenToOngo=(Button) findViewById(R.id.btnPenToOngo);
+        worname=(EditText) findViewById(R.id.workername) ;
+        worcontact=(EditText) findViewById(R.id.workercontact);
        // imageView=(ImageView) findViewById(R.id.imageview);
         //temp=(TextView) findViewById(R.id.temp);
         obj = new dataongocom();
@@ -166,19 +169,41 @@ public class PenToOngoCom extends AppCompatActivity
             Toast.makeText(this,"This complain's status has already been changed",Toast.LENGTH_SHORT).show();
             return;
         }
-        dbref.removeValue();
+        String wname=worname.getText().toString();
+        String wcon=worcontact.getText().toString();
 
+        if(TextUtils.isEmpty(wname))
+        {
+            Toast.makeText(this,"Enter worker's name...",Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(wcon))
+        {
+            Toast.makeText(this,"Enter worker's contact number...",Toast.LENGTH_SHORT).show();
+        }
+        else if(wcon.length()!=10)
+        {
+            Toast.makeText(this,"Worker's contact number is not correct...",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            dbref.removeValue();
 
-        obj.setComplain(com);
-        obj.setComplain_id(comid);
-        obj.setComplain_type(comtype);
-        obj.setLocation(location);
-        obj.setUser_name(username);
-        obj.setUser_id(userid);
-        obj.setImage_URL(image_url);
-        ref.child(comid).setValue(obj);
+            obj.setComplain(com);
+            obj.setComplain_id(comid);
+            obj.setComplain_type(comtype);
+            obj.setLocation(location);
+            obj.setUser_name(username);
+            obj.setUser_id(userid);
+            obj.setImage_URL(image_url);
+            obj.setComplain_id(comid);
+            obj.setWorker_name(wname);
+            obj.setWorker_number(wcon);
+            obj.setStatus_by_student("Not completed");
+            ref.child(comid).setValue(obj);
 
-        Toast.makeText(this, "Complain's status has been changed...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Complain's status has been changed...", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

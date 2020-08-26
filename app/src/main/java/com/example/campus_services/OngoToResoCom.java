@@ -47,8 +47,8 @@ public class OngoToResoCom extends AppCompatActivity
 {
     private Button btnPenToOngo;
     private ImageButton btnbackPenToOngo;
-    private String username,userid,comtype,com,location,comid,CurrComId;
-    private dataongocom obj;
+    private String username,userid,comtype,com,location,comid,CurrComId,asswor,worcon,status;
+    private dataresocom obj;
     private DatabaseReference ref;
     //private TextView temp;
 
@@ -67,7 +67,7 @@ public class OngoToResoCom extends AppCompatActivity
                 startActivity(intent1);
             }
         });
-        obj = new dataongocom();
+        obj = new dataresocom();
         Intent intent = getIntent();
 
         CurrComId = intent.getStringExtra("CurrComId");
@@ -132,15 +132,47 @@ public class OngoToResoCom extends AppCompatActivity
                 break;
             }
         }
+        i++;
+        in=i;
+        for(;;i++)
+        {
+            if(CurrComId.charAt(i)=='\n')
+            {
+                asswor=CurrComId.substring(in,i);
+                break;
+            }
+        }
+        i++;
+        in=i;
+        for(;;i++)
+        {
+            if(CurrComId.charAt(i)=='\n')
+            {
+                worcon=CurrComId.substring(in,i);
+                break;
+            }
+        }
+        i++;
+        in=i;
+        for(;;i++)
+        {
+            if(CurrComId.charAt(i)=='\n')
+            {
+                status=CurrComId.substring(in,i);
+                break;
+            }
+        }
         //temp.setText(comid);
-        btnPenToOngo.setOnClickListener(new View.OnClickListener() {
+        btnPenToOngo.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                function(comid);
+            public void onClick(View v)
+            {
+                function();
             }
         });
     }
-    private void function(String comid)
+    private void function()
     {
         DatabaseReference dbref= FirebaseDatabase.getInstance().getReference("OngoingComplains").child(comid);
         if(dbref.equals(null))
@@ -148,18 +180,22 @@ public class OngoToResoCom extends AppCompatActivity
             Toast.makeText(this,"This complain's status has already been changed",Toast.LENGTH_SHORT).show();
             return;
         }
-        dbref.removeValue();
+        if(status.equals("Not completed"))
+            Toast.makeText(this,"This complain's status has not been approved by student",Toast.LENGTH_SHORT).show();
+        else {
+            dbref.removeValue();
 
 
-        obj.setComplain(com);
-        obj.setComplain_id(comid);
-        obj.setComplain_type(comtype);
-        obj.setLocation(location);
-        obj.setUser_name(username);
-        obj.setUser_id(userid);
-        ref.child(comid).setValue(obj);
+            obj.setComplain(com);
+            obj.setComplain_id(comid);
+            obj.setComplain_type(comtype);
+            obj.setLocation(location);
+            obj.setUser_name(username);
+            obj.setUser_id(userid);
+            ref.child(comid).setValue(obj);
 
-        Toast.makeText(this, "Complain's status has been changed...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Complain's status has been changed...", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

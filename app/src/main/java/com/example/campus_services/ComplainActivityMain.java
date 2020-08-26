@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,8 +35,8 @@ import android.widget.Button;
 public class ComplainActivityMain extends AppCompatActivity
 {
     private Button uplo, postc, prevc, chop;
-    private ImageButton backb;
-    private EditText comt1, com1, lo1;
+    //private ImageButton backb;
+    private EditText com1, lo1;
     private ImageView iv;
     private datapencom obj;
     private String user_email,user_name;
@@ -44,6 +46,7 @@ public class ComplainActivityMain extends AppCompatActivity
     private DatabaseReference ref;
     private DatabaseReference table_user;
     private ValueEventListener listener1;
+    private Spinner comt1;
     public Uri imguri;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,8 +57,8 @@ public class ComplainActivityMain extends AppCompatActivity
         uplo = (Button) findViewById(R.id.upload);
         postc = (Button) findViewById(R.id.postcomplaint);
         prevc = (Button) findViewById(R.id.previouscomplaint);
-        backb = (ImageButton) findViewById(R.id.bb);
-        comt1 = (EditText) findViewById(R.id.compt);
+        //backb = (ImageButton) findViewById(R.id.bb);
+        comt1 = (Spinner) findViewById(R.id.spinner);
         com1 = (EditText) findViewById(R.id.com);
         lo1 = (EditText) findViewById(R.id.lo);
         sref = FirebaseStorage.getInstance().getReference("PendingComplains/Images");
@@ -70,6 +73,12 @@ public class ComplainActivityMain extends AppCompatActivity
         user_email =user_email.substring(0,i);
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         table_user = db.getReference("Users").child("Student");
+
+        ArrayAdapter<String> myadapter= new ArrayAdapter<>(ComplainActivityMain.this,
+                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.comtype));
+        myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        comt1.setAdapter(myadapter);
+
         listener1 = table_user.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -105,13 +114,7 @@ public class ComplainActivityMain extends AppCompatActivity
                     startActivity(intent);
                 }
             });
-            backb.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent=new Intent(ComplainActivityMain.this,HomeActivity.class);
-                    startActivity(intent);
-                }
-            });
+
         postc.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -141,7 +144,7 @@ public class ComplainActivityMain extends AppCompatActivity
     }
 
     private void uploadpic() {
-        String ct = comt1.getText().toString();
+        String ct = comt1.getSelectedItem().toString();
         String c = com1.getText().toString();
         String l = lo1.getText().toString();
         String imageid;
@@ -197,6 +200,15 @@ public class ComplainActivityMain extends AppCompatActivity
         intent.setType("Images/");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     @Override

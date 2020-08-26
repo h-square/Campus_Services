@@ -100,6 +100,15 @@ public class PreviousComplains extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),ComplainActivityMain.class);
+        finish();
+        startActivity(intent);
+    }
     private void getPendingComplainsList()
     {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -121,7 +130,7 @@ public class PreviousComplains extends AppCompatActivity
                     if(item.getUser_id().equals(user_email))
                     {
                         //pencomarrlist.add(toString(c));
-                        pencomarrlist.add("Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n"+"Complain_ID:-"+item.getComplain_id()+"\n");
+                        pencomarrlist.add("Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n");
                         //pencomarrlist.add(item.getImage_URL());
                     }
                     pencomlistview.setAdapter(arrayAdapter);

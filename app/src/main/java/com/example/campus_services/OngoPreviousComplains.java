@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,89 +38,47 @@ import java.util.ArrayList;
 
 public class OngoPreviousComplains extends AppCompatActivity {
 
-    private Button pen,ongo,resol,postc,prevc;
+    private Button pen, ongo, resol, postc, prevc;
     private ListView pencomlistview;
     private FirebaseAuth mAuth;
-    private ArrayList<String> pencomarrlist,available;
+    private ArrayList<String> pencomarrlist, available, pencomarrlist1;
     private ArrayAdapter<String> arrayAdapter;
     private String user_email;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongo_previous_complains);
-        pen=(Button) findViewById(R.id.pen);
-        ongo=(Button) findViewById(R.id.ongo);
-        resol=(Button) findViewById(R.id.reso);
-        postc=(Button) findViewById(R.id.postcomplaint1);
-        prevc=(Button) findViewById(R.id.previouscomplaint1);
-        pencomlistview=(ListView) findViewById(R.id.ongocomlistview);
-
+        pen = (Button) findViewById(R.id.pen);
+        ongo = (Button) findViewById(R.id.ongo);
+        resol = (Button) findViewById(R.id.reso);
+        postc = (Button) findViewById(R.id.postcomplaint1);
+        prevc = (Button) findViewById(R.id.previouscomplaint1);
+        pencomlistview = (ListView) findViewById(R.id.ongocomlistview);
+        pencomarrlist1=new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         pencomarrlist = new ArrayList<>();
         available = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(this,R.layout.dish_info,R.id.dishnameid,pencomarrlist);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.dish_info, R.id.dishnameid, pencomarrlist);
         pencomlistview.setAdapter(arrayAdapter);
 
-        getOngoingComplainsList();
-        ongo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OngoPreviousComplains.this,OngoPreviousComplains.class);
-                startActivity(intent);
-            }
-        });
-        pen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OngoPreviousComplains.this,PreviousComplains.class);
-                startActivity(intent);
-            }
-        });
-        resol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OngoPreviousComplains.this,ResoPreviousComplains.class);
-                startActivity(intent);
-            }
-        });
-        postc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OngoPreviousComplains.this,ComplainActivityMain.class);
-                startActivity(intent);
-            }
-        });
-        prevc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OngoPreviousComplains.this,OngoPreviousComplains.class);
-                startActivity(intent);
-            }
-        });
-    }
-    private void getOngoingComplainsList()
-    {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_canteen = database.getReference("OngoingComplains");
         user_email = mAuth.getCurrentUser().getEmail();
-        int i=0;
-        while(user_email.charAt(i) != '@')
+        int i = 0;
+        while (user_email.charAt(i) != '@')
             i++;
-        user_email =user_email.substring(0,i);
+        user_email = user_email.substring(0, i);
         //final int c=0;
-        table_canteen.addValueEventListener(new ValueEventListener()
-        {
+        table_canteen.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                for(DataSnapshot ds:dataSnapshot.getChildren())
-                {
-                    dataongocom item=ds.getValue(dataongocom.class);
-                    if(item.getUser_id().equals(user_email))
-                    {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    dataongocom item = ds.getValue(dataongocom.class);
+                    if (item.getUser_id().equals(user_email)) {
                         //pencomarrlist.add(toString(c));
-                        pencomarrlist.add("Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n"+"Complain_ID:-"+item.getComplain_id()+"\n");
+                        pencomarrlist1.add(item.getComplain_type()+"\n"+item.getComplain()+"\n"+item.getLocation()+"\n"+item.getComplain_id()+"\n"+item.getStatus_by_student()+"\n");
+                        pencomarrlist.add("Complain Type:-" + item.getComplain_type() + "\n" + "Complain:-" + item.getComplain() + "\n" + "Location:-" + item.getLocation() + "\n" + "Assigned worker:-" + item.getWorker_name() + "\n" + "Worker's contact:-" + item.getWorker_number() + "\n" + "Status by student:-" + item.getStatus_by_student() + "\n\n");
                         //pencomarrlist.add(item.getImage_URL());
                     }
                     pencomlistview.setAdapter(arrayAdapter);
@@ -128,10 +87,72 @@ public class OngoPreviousComplains extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
+        pencomlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent1 = new Intent(getApplicationContext(), OngoComStudents.class);
+                intent1.putExtra("CurrCom",pencomarrlist1.get(position));
+                /*intent1.putExtra("CurrentDish", pencomarrlist.get(position));
+                intent1.putExtra("OrderString", OrderString);
+                intent1.putExtra("CanteenName",CanteenName);*/
+                finish();
+                startActivity(intent1);
+            }
+        });
+
+
+        ongo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OngoPreviousComplains.this, OngoPreviousComplains.class);
+                startActivity(intent);
+            }
+        });
+        pen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OngoPreviousComplains.this, PreviousComplains.class);
+                startActivity(intent);
+            }
+        });
+        resol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OngoPreviousComplains.this, ResoPreviousComplains.class);
+                startActivity(intent);
+            }
+        });
+        postc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OngoPreviousComplains.this, ComplainActivityMain.class);
+                startActivity(intent);
+            }
+        });
+        prevc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OngoPreviousComplains.this, OngoPreviousComplains.class);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), ComplainActivityMain.class);
+        finish();
+        startActivity(intent);
     }
 }
+
