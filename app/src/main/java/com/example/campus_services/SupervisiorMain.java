@@ -86,7 +86,7 @@ public class SupervisiorMain extends AppCompatActivity
                     datapencom item = ds.getValue(datapencom.class);
                     //currcomid= item.getComplain_id();
                     pencomarrlist1.add(item.getUser_name()+"\n"+item.getUser_id()+"\n"+item.getComplain_type()+"\n"+item.getComplain()+"\n"+item.getLocation()+"\n"+item.getComplain_id()+"\n"+item.getImage_URL()+"\n");
-                    pencomarrlist.add("Student Name:-"+item.getUser_name()+"\n"+"Student ID:-"+item.getUser_id()+"\n"+"Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n"+"Complain ID:-"+item.getComplain_id()+"\n");
+                    pencomarrlist.add("Student Name:-"+item.getUser_name()+"\n"+"Student ID:-"+item.getUser_id()+"\n"+"Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n");
                 }
                 pencomsuper.setAdapter(arrayAdapter);
                 mDatabase.removeEventListener(this);

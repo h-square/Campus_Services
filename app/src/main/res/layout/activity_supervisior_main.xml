@@ -71,9 +71,9 @@
         android:textSize="25dp" />
 
     <ListView
-        android:layout_width="373dp"
-        android:layout_height="376dp"
         android:id="@+id/pencomsuper"
+        android:layout_width="379dp"
+        android:layout_height="403dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

@@ -78,7 +78,7 @@ public class SupervisorMainOngo extends AppCompatActivity
                     dataongocom item = ds.getValue(dataongocom.class);
                     //currcomid= item.getComplain_id();
                     pencomarrlist1.add(item.getUser_name()+"\n"+item.getUser_id()+"\n"+item.getComplain_type()+"\n"+item.getComplain()+"\n"+item.getLocation()+"\n"+item.getComplain_id()+"\n"+item.getWorker_name()+"\n"+item.getWorker_number()+"\n"+item.getStatus_by_student()+"\n");
-                    pencomarrlist.add("Student Name:-"+item.getUser_name()+"\n"+"Student ID:-"+item.getUser_id()+"\n"+"Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n"+"Complain ID:-"+item.getComplain_id()+"\n"+"Assigned worker:-"+item.getWorker_name()+
+                    pencomarrlist.add("Student Name:-"+item.getUser_name()+"\n"+"Student ID:-"+item.getUser_id()+"\n"+"Complain Type:-"+item.getComplain_type()+"\n"+"Complain:-"+item.getComplain()+"\n"+"Location:-"+item.getLocation()+"\n"+"Assigned worker:-"+item.getWorker_name()+
                             "\n"+"Worker's contact:-"+item.getWorker_number()+"\n"+"Status by student:-"+item.getStatus_by_student()+"\n");
                 }
                 pencomsuper.setAdapter(arrayAdapter);
